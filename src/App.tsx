@@ -1,14 +1,14 @@
-import { useState } from 'react'
-import './App.css'
-import reactLogo from './assets/react.svg'
-import { addBy, decrement, increment, reset, selectCounterValue } from './store/counterSlice'
-import { useAppDispatch, useAppSelector } from './store/hooks'
-import viteLogo from '/vite.svg'
+import { useState } from 'react';
+import './App.css';
+import reactLogo from './assets/react.svg';
+import { addBy, decrement, increment, reset, selectCounterValue } from './store/counterSlice';
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import viteLogo from '/vite.svg';
 
 function App() {
-  const [step, setStep] = useState(1)
-  const count = useAppSelector(selectCounterValue)
-  const dispatch = useAppDispatch()
+  const [step, setStep] = useState(1);
+  const count = useAppSelector(selectCounterValue);
+  const dispatch = useAppDispatch();
 
   return (
     <>
@@ -41,7 +41,7 @@ function App() {
       </div>
       <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
