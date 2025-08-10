@@ -21,6 +21,7 @@
   --color-border: #e5e5e5;
 
   /* Spacing Scale (mobile-first) */
+  --space-4xs: 0.05rem; /* 2px */
   --space-xs: 0.25rem; /* 4px */
   --space-sm: 0.5rem; /* 8px */
   --space-md: 1rem; /* 16px */
@@ -96,7 +97,7 @@ h5,
 h6 {
   font-weight: 600;
   line-height: 1.2;
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-4xs);
 }
 
 h1 {
@@ -123,7 +124,7 @@ h4 {
 }
 
 p {
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-xs);
   line-height: 1.6;
 }
 

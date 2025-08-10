@@ -1,0 +1,28 @@
+// =============================================
+// TYPOGRAPHY & FONTS
+// =============================================
+
+@use '../abstracts' as *;
+
+// Font-face for local Gidole font
+// Provide multiple formats if available for better compatibility
+@font-face {
+  font-family: 'Gidole';
+  src: url('../../vendor/fonts/gidole-regular/Gidole-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  font-family: $font-family-base;
+}
+
+body {
+  font-family: $font-family-base;
+}
+
+// Utility class if you need to force font usage somewhere
+.font-base {
+  font-family: $font-family-base !important;
+}

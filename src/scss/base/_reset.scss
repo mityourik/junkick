@@ -15,7 +15,7 @@
 
 // HTML & Body
 html {
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: $font-family-base;
   font-size: font-size(base);
   line-height: line-height(normal);
   color: color(text);

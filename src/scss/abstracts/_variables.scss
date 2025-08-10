@@ -4,29 +4,50 @@
 
 @use 'sass:map';
 
-// Цвета
+// CSS Custom Properties для цветов с темной темой
+:root {
+  // Светлая тема (по умолчанию)
+  --color-primary: #2c91dc;
+  --color-primary-hover: #086dbb;
+  --color-secondary: #f39c12;
+  --color-success: #27ae60;
+  --color-warning: #f1c40f;
+  --color-danger: #e74c3c;
+
+  --color-text: #213547;
+  --color-text-light: #888;
+  --color-text-muted: #6c757d;
+
+  --color-background: #ffffff;
+  --color-surface: #f9f9f9;
+  --color-border: #e5e5e5;
+}
+
+// Автоматическое переключение на темную тему
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: rgba(255, 255, 255, 0.87);
+    --color-text-light: #888;
+    --color-background: #242424;
+    --color-surface: #1a1a1a;
+    --color-border: #404040;
+  }
+}
+
+// Sass map для обратной совместимости
 $colors: (
-  primary: #2c91dc,
-  primary-hover: #086dbb,
-  secondary: #f39c12,
-  success: #27ae60,
-  warning: #f1c40f,
-  danger: #e74c3c,
-  
-  text: #213547,
-  text-light: #888,
-  text-muted: #6c757d,
-  
-  background: #ffffff,
-  surface: #f9f9f9,
-  border: #e5e5e5,
-  
-  // Dark theme
-  dark-text: rgba(255, 255, 255, 0.87),
-  dark-text-light: #888,
-  dark-background: #242424,
-  dark-surface: #1a1a1a,
-  dark-border: #404040
+  primary: var(--color-primary),
+  primary-hover: var(--color-primary-hover),
+  secondary: var(--color-secondary),
+  success: var(--color-success),
+  warning: var(--color-warning),
+  danger: var(--color-danger),
+  text: var(--color-text),
+  text-light: var(--color-text-light),
+  text-muted: var(--color-text-muted),
+  background: var(--color-background),
+  surface: var(--color-surface),
+  border: var(--color-border),
 );
 
 // Функция для получения цвета
@@ -37,11 +58,15 @@ $colors: (
 // Breakpoints (Mobile-First подход)
 $breakpoints: (
   xs: 0,
-  sm: 640px,   // Большие телефоны
-  md: 768px,   // Планшеты
-  lg: 1024px,  // Ноутбуки
-  xl: 1280px,  // Десктопы
-  xxl: 1536px  // Большие мониторы
+  sm: 640px,
+  // Большие телефоны
+  md: 768px,
+  // Планшеты
+  lg: 1024px,
+  // Ноутбуки
+  xl: 1280px,
+  // Десктопы
+  xxl: 1536px, // Большие мониторы
 );
 
 @function breakpoint($name) {
@@ -50,15 +75,23 @@ $breakpoints: (
 
 // Spacing Scale (Mobile-First)
 $spacing: (
-  xs: 0.25rem,  // 4px
-  sm: 0.5rem,   // 8px
-  md: 1rem,     // 16px
-  lg: 1.5rem,   // 24px
-  xl: 2rem,     // 32px
-  2xl: 3rem,    // 48px
-  3xl: 4rem,    // 64px
-  4xl: 6rem,    // 96px
-  5xl: 8rem     // 128px
+  xs: 0.25rem,
+  // 4px
+  sm: 0.5rem,
+  // 8px
+  md: 1rem,
+  // 16px
+  lg: 1.5rem,
+  // 24px
+  xl: 2rem,
+  // 32px
+  2xl: 3rem,
+  // 48px
+  3xl: 4rem,
+  // 64px
+  4xl: 6rem,
+  // 96px
+  5xl: 8rem, // 128px
 );
 
 @function space($size) {
@@ -67,16 +100,25 @@ $spacing: (
 
 // Typography Scale
 $font-sizes: (
-  xs: 0.75rem,   // 12px
-  sm: 0.875rem,  // 14px
-  base: 1rem,    // 16px
-  lg: 1.125rem,  // 18px
-  xl: 1.25rem,   // 20px
-  2xl: 1.5rem,   // 24px
-  3xl: 1.875rem, // 30px
-  4xl: 2.25rem,  // 36px
-  5xl: 3rem,     // 48px
-  6xl: 4rem      // 64px
+  xs: 0.75rem,
+  // 12px
+  sm: 0.875rem,
+  // 14px
+  base: 1rem,
+  // 16px
+  lg: 1.125rem,
+  // 18px
+  xl: 1.25rem,
+  // 20px
+  2xl: 1.5rem,
+  // 24px
+  3xl: 1.875rem,
+  // 30px
+  4xl: 2.25rem,
+  // 36px
+  5xl: 3rem,
+  // 48px
+  6xl: 4rem, // 64px
 );
 
 @function font-size($size) {
@@ -90,7 +132,7 @@ $font-weights: (
   medium: 500,
   semibold: 600,
   bold: 700,
-  extrabold: 800
+  extrabold: 800,
 );
 
 @function font-weight($weight) {
@@ -102,7 +144,7 @@ $line-heights: (
   tight: 1.2,
   normal: 1.5,
   relaxed: 1.6,
-  loose: 1.8
+  loose: 1.8,
 );
 
 @function line-height($height) {
@@ -116,7 +158,7 @@ $radius: (
   md: 0.5rem,
   lg: 0.75rem,
   xl: 1rem,
-  full: 9999px
+  full: 9999px,
 );
 
 @function radius($size) {
@@ -129,7 +171,7 @@ $shadows: (
   md: 0 4px 6px -1px rgb(0 0 0 / 0.1),
   lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
   xl: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-  2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25)
+  2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25),
 );
 
 @function shadow($size) {
@@ -144,7 +186,7 @@ $z-index: (
   modal-backdrop: 1040,
   modal: 1050,
   popover: 1060,
-  tooltip: 1070
+  tooltip: 1070,
 );
 
 @function z-index($layer) {
@@ -156,9 +198,20 @@ $transitions: (
   fast: 0.15s ease,
   normal: 0.2s ease,
   slow: 0.3s ease,
-  bounce: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)
+  bounce: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55),
 );
 
 @function transition($speed) {
   @return map.get($transitions, $speed);
 }
+
+// Base Font Family
+$font-family-base:
+  'Gidole',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  Roboto,
+  'Helvetica Neue',
+  Arial,
+  sans-serif;

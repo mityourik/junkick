@@ -14,7 +14,7 @@ interface IconProps {
 }
 
 // Компонент иконки
-export default function Icon({
+export const Icon = ({
   name,
   size = 'md',
   className = '',
@@ -23,7 +23,7 @@ export default function Icon({
   alt = '',
   custom,
   ariaLabel,
-}: IconProps) {
+}: IconProps) => {
   // Определяем SVG иконки
   const icons = {
     logo: (
@@ -142,7 +142,7 @@ export default function Icon({
   }
 
   return null;
-}
+};
 
 // Экспорт типов для использования в других компонентах
 export type { IconProps, IconSize };

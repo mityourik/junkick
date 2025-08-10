@@ -1,8 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
-import Icon from './Icon';
+import { Icon } from './Icon';
 import mainLogo from '../vendor/images/logos/main-logo-transparent.png';
 
-export default function Navigation() {
+export const Navigation = () => {
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
@@ -44,4 +44,4 @@ export default function Navigation() {
       </div>
     </nav>
   );
-}
+};

@@ -8,52 +8,52 @@
   &__hero {
     text-align: center;
     padding: space(2xl) 0;
-    
+
     @include desktop-up {
-      padding: space(4xl) 0;
+      padding: space(xl) 0;
     }
   }
-  
+
   &__title {
     @include heading(3xl, bold);
     margin-bottom: space(md);
-    
+
     @include desktop-up {
-      font-size: font-size(5xl);
+      font-size: font-size(3xl);
     }
   }
-  
-  &__subtitle {
-    @include text(lg, normal, text-muted);
-    margin-bottom: space(xl);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    
-    @include desktop-up {
-      font-size: font-size(xl);
-    }
-  }
-  
-  &__cta {
-    @include flex-center;
-    gap: space(md);
-    flex-wrap: wrap;
-  }
-  
+
+  // &__subtitle {
+  //   @include text(lg, normal, text-muted);
+  //   margin-bottom: space(xl);
+  //   max-width: 600px;
+  //   margin-left: auto;
+  //   margin-right: auto;
+
+  //   @include desktop-up {
+  //     font-size: font-size(xl);
+  //   }
+  // }
+
+  // &__cta {
+  //   @include flex-center;
+  //   gap: space(md);
+  //   flex-wrap: wrap;
+  // }
+
   &__features {
     padding: space(3xl) 0;
-    
+
     @include desktop-up {
-      padding: space(5xl) 0;
+      padding: space(xl) 0;
     }
   }
-  
+
   &__features-grid {
     @include grid-responsive(1, 2, 3);
-    
+
     & {
-      margin-top: space(2xl);
+      margin-top: space(xl);
     }
   }
 }

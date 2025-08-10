@@ -1,21 +1,22 @@
-export default function HomePage() {
+import { ProjectCard } from '../components/ProjectCard';
+import { RoleButtonsList } from '../components/RolesButtonsList';
+
+export const HomePage = () => {
   return (
     <div className="homepage">
       <section className="homepage__hero">
         <div className="container">
-          <h1 className="homepage__title">Welcome to Junkick</h1>
-          <p className="homepage__subtitle">Modern mobile-first приложение с SCSS архитектурой</p>
-          <div className="homepage__cta">
-            <button className="btn btn--primary btn--lg">Get Started</button>
-            <button className="btn btn--outline btn--lg">Learn More</button>
-          </div>
+          <h1 className="homepage__title">это сработает!</h1>
+          <RoleButtonsList />
         </div>
       </section>
 
       <section className="homepage__features">
         <div className="container">
-          <h2 className="text-center">Features</h2>
+          <h2 className="text-center">Проекты уже в работе:</h2>
           <div className="homepage__features-grid">
+            {/* Карточки проектов */}
+            <ProjectCard />
             <div className="card">
               <div className="card__body">
                 <h3 className="card__title">Mobile-First</h3>
@@ -39,4 +40,4 @@ export default function HomePage() {
       </section>
     </div>
   );
-}
+};

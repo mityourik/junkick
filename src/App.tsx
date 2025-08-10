@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Navigation from './components/Navigation';
-import HomePage from './pages/HomePage';
+import { Navigation } from './components/Navigation';
+import { HomePage } from './pages/HomePage';
 import ProjectsPage from './pages/ProjectsPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 
-function App() {
+export const App = () => {
   return (
     <BrowserRouter>
       <Navigation />
@@ -21,6 +21,6 @@ function App() {
       </main>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
