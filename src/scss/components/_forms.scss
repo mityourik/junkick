@@ -1,0 +1,95 @@
+// =============================================
+// ФОРМЫ (Mobile-First)
+// =============================================
+
+@use '../abstracts' as *;
+
+.form {
+  &__group {
+    margin-bottom: space(md);
+  }
+  
+  &__label {
+    display: block;
+    @include text(sm, medium, text);
+    margin-bottom: space(xs);
+  }
+  
+  &__input {
+    @include input-base;
+    
+    &--error {
+      border-color: color(danger);
+      
+      &:focus {
+        outline-color: color(danger);
+        border-color: color(danger);
+      }
+    }
+  }
+  
+  &__textarea {
+  // Plain declarations first to avoid mixed-decls with input-base nested rules
+  min-height: 120px;
+  resize: vertical;
+  @include input-base;
+  }
+  
+  &__select {
+  cursor: pointer;
+  @include input-base;
+  }
+  
+  &__error {
+    @include text(sm, normal, danger);
+    margin-top: space(xs);
+  }
+  
+  &__help {
+    @include text(sm, normal, text-muted);
+    margin-top: space(xs);
+  }
+  
+  // Checkbox и Radio
+  &__checkbox,
+  &__radio {
+    display: flex;
+    align-items: center;
+    gap: space(sm);
+    cursor: pointer;
+    
+    input {
+      width: auto;
+      margin: 0;
+    }
+  }
+  
+  // Inline forms
+  &--inline {
+    @include flex-between;
+    gap: space(sm);
+    
+    .form__group {
+      margin-bottom: 0;
+      flex: 1;
+    }
+    
+    @include mobile-up {
+      flex-direction: column;
+      align-items: stretch;
+      
+      .form__group {
+        margin-bottom: space(md);
+      }
+    }
+    
+    @include tablet-up {
+      flex-direction: row;
+      align-items: end;
+      
+      .form__group {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

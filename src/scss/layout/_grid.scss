@@ -1,0 +1,95 @@
+// =============================================
+// КОНТЕЙНЕР И СЕТКИ (Mobile-First)
+// =============================================
+
+@use '../abstracts' as *;
+
+.container {
+  @include container;
+}
+
+.container--sm {
+  @include container(640px);
+}
+
+.container--lg {
+  @include container(1400px);
+}
+
+// Grid система
+.grid {
+  @include grid;
+  
+  &--cols-1 { @include grid(1); }
+  &--cols-2 { @include grid(2); }
+  &--cols-3 { @include grid(3); }
+  &--cols-4 { @include grid(4); }
+  
+  // Responsive грид
+  &--responsive {
+    @include grid-responsive;
+  }
+  
+  &--responsive-4 {
+    @include grid-responsive(1, 2, 4);
+  }
+  
+  // Gap вариации
+  &--gap-sm { gap: space(sm); }
+  &--gap-lg { gap: space(lg); }
+  &--gap-xl { gap: space(xl); }
+}
+
+// Flexbox утилиты
+.flex {
+  display: flex;
+  
+  &--center {
+    @include flex-center;
+  }
+  
+  &--between {
+    @include flex-between;
+  }
+  
+  &--column {
+    @include flex-column;
+  }
+  
+  &--center-column {
+    @include flex-center-column;
+  }
+  
+  &--wrap {
+    flex-wrap: wrap;
+  }
+  
+  &--no-wrap {
+    flex-wrap: nowrap;
+  }
+}
+
+// Section spacing
+.section {
+  padding: space(2xl) 0;
+  
+  @include desktop-up {
+    padding: space(4xl) 0;
+  }
+  
+  &--sm {
+    padding: space(xl) 0;
+    
+    @include desktop-up {
+      padding: space(2xl) 0;
+    }
+  }
+  
+  &--lg {
+    padding: space(3xl) 0;
+    
+    @include desktop-up {
+      padding: space(5xl) 0;
+    }
+  }
+}

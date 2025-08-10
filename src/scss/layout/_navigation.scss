@@ -1,0 +1,114 @@
+// =============================================
+// НАВИГАЦИЯ (Mobile-First)
+// =============================================
+
+@use '../abstracts' as *;
+
+.navbar {
+  border-bottom: 1px solid color(border);
+  background-color: color(background);
+  padding: space(md) 0;
+  
+  &__container {
+  // Declarations first to avoid mixed-decls with container's internal media queries
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @include container;
+  }
+  
+  &__brand {
+  @include flex-center;
+  @include text(lg, semibold, text);
+  gap: space(xs);
+    @include desktop-up {
+      font-size: font-size(xl);
+    }
+    &-text {
+      display: inline-block;
+    }
+  }
+  
+  &__menu {
+  @include flex-center;
+  gap: space(lg);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+    
+    // Mobile: скрытое меню
+    @include mobile-up {
+      display: none;
+    }
+    
+    // Desktop: показываем
+    @include desktop-up {
+      display: flex;
+    }
+  }
+  
+  &__link {
+  @include text(base, medium, text);
+  transition: transition(normal);
+    
+    &:hover {
+      color: color(primary);
+    }
+    
+    &--active {
+      color: color(primary);
+      font-weight: font-weight(semibold);
+    }
+  }
+  
+  &__toggle {
+  @include button-base;
+  padding: space(xs);
+  background: transparent;
+  color: color(text);
+    
+    // Desktop: скрываем
+    @include desktop-up {
+      display: none;
+    }
+  }
+  
+  // Mobile menu
+  &__mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: color(background);
+    z-index: z-index(modal);
+    padding: space(xl);
+    transform: translateX(-100%);
+    transition: transform transition(normal);
+    
+    &--open {
+      transform: translateX(0);
+    }
+    
+    .navbar__menu {
+  @include flex-column;
+  align-items: flex-start;
+  gap: space(md);
+  display: flex;
+    }
+    
+    @include desktop-up {
+      display: none;
+    }
+  }
+  
+  &__close {
+    position: absolute;
+    top: space(md);
+    right: space(md);
+    @include button-base;
+    padding: space(xs);
+    background: transparent;
+    color: color(text);
+  }
+}

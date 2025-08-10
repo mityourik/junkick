@@ -1,0 +1,64 @@
+// =============================================
+// КАРТОЧКИ (Mobile-First)
+// =============================================
+
+@use '../abstracts' as *;
+
+.card {
+  @include card;
+  
+  &__header {
+    padding-bottom: space(sm);
+    border-bottom: 1px solid color(border);
+    margin-bottom: space(md);
+  }
+  
+  &__title {
+    @include heading(lg, semibold);
+    margin-bottom: space(xs);
+  }
+  
+  &__subtitle {
+    @include text(sm, normal, text-muted);
+    margin-bottom: 0;
+  }
+  
+  &__body {
+    line-height: line-height(relaxed);
+  }
+  
+  &__footer {
+    padding-top: space(sm);
+    border-top: 1px solid color(border);
+    margin-top: space(md);
+  // Declarations placed before mixin to avoid mixed-decls warnings
+  @include flex-between;
+  }
+  
+  // Варианты карточек
+  &--hover {
+  cursor: pointer; // declaration first
+  @include hover-lift;
+  }
+  
+  &--bordered {
+    border: 2px solid color(border);
+  }
+  
+  &--shadow-lg {
+    box-shadow: shadow(lg);
+  }
+  
+  &--rounded {
+    border-radius: radius(xl);
+  }
+}
+
+// Сетка карточек
+.cards-grid {
+  @include grid-responsive(1, 2, 3);
+  
+  @include large-up {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
