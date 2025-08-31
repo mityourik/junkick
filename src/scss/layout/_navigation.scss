@@ -5,16 +5,23 @@
 @use '../abstracts' as *;
 
 .navbar {
-  border-bottom: 1px solid color(border);
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--navbar-height);
+  z-index: z-index(fixed);
+  border-top: 1px solid color(border);
   background-color: color(background);
-  padding: space(md) 0;
+  padding: 0;
   
   &__container {
-  // Declarations first to avoid mixed-decls with container's internal media queries
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  @include container;
+    // Declarations first to avoid mixed-decls with container's internal media queries
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    @include container;
   }
   
   &__brand {

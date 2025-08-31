@@ -20,7 +20,10 @@
 
   --color-background: #ffffff;
   --color-surface: #f9f9f9;
-  --color-border: #e5e5e5;
+  --color-border: #000000;
+
+  // Layout sizes
+  --navbar-height: 64px;
 }
 
 // Автоматическое переключение на темную тему

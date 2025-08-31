@@ -7,15 +7,35 @@
 .card {
   @include card;
 
+  background-color: color(background);
+  border-color: color(border);
+  max-width: 50%;
+  padding: 6px;
+  border-radius: 0.1rem;
+
   &__header {
-    padding-bottom: space(sm);
     border-bottom: 1px solid color(border);
-    margin-bottom: space(md);
+    margin-bottom: space(xs);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__status {
+    display: flex;
+    margin-bottom: 5px;
+
+    &-looking-for {
+      @include text(xs, normal, text-muted);
+      display: flex;
+      align-items: center;
+      max-width: 33%;
+      margin-bottom: 0px;
+    }
   }
 
   &__title {
     @include heading(lg, semibold);
-    margin-bottom: space(xs);
+    margin-bottom: 0;
   }
 
   &__subtitle {
@@ -64,6 +84,23 @@
 
   &--bordered {
     border: 2px solid color(border);
+  }
+
+  // Цветные варианты границ
+  &--border-primary {
+    border-color: color(primary);
+  }
+
+  &--border-success {
+    border-color: color(success);
+  }
+
+  &--border-warning {
+    border-color: color(warning);
+  }
+
+  &--border-danger {
+    border-color: color(danger);
   }
 
   &--shadow-lg {

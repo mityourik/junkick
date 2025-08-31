@@ -1,0 +1,254 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Дмитрий Иванов",
+      "email": "dmitriy@junkick.ru",
+      "role": "джун",
+      "avatar": "/avatars/dmitriy.jpg",
+      "skills": ["React", "TypeScript", "SCSS"],
+      "bio": "Frontend разработчик, изучаю современные технологии",
+      "experience": 1,
+      "location": "Москва",
+      "portfolio": "https://github.com/dmitriy-ivanov",
+      "createdAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Анна Смирнова",
+      "email": "anna@junkick.ru",
+      "role": "тимлид",
+      "avatar": "/avatars/anna.jpg",
+      "skills": ["React", "Node.js", "PostgreSQL", "Team Leadership"],
+      "bio": "Тимлид с 5-летним опытом разработки",
+      "experience": 5,
+      "location": "Санкт-Петербург",
+      "portfolio": "https://github.com/anna-smirnova",
+      "createdAt": "2023-05-20T08:30:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Максим Петров",
+      "email": "maxim@junkick.ru",
+      "role": "заказчик",
+      "avatar": "/avatars/maxim.jpg",
+      "skills": ["Product Management", "UX/UI", "Analytics"],
+      "bio": "Продакт-менеджер, создаю цифровые продукты",
+      "experience": 3,
+      "location": "Новосибирск",
+      "portfolio": "https://behance.net/maxim-petrov",
+      "createdAt": "2023-12-01T15:45:00Z"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "name": "Сайт доставки Bronfood",
+      "description": "Полнофункциональный сайт доставки еды с системой заказов, оплаты и трекингом доставки",
+      "status": "В разработке",
+      "lookingFor": "Набираем команду",
+      "category": "E-commerce",
+      "tech": ["React", "TypeScript", "Redux Toolkit", "Vite", "Go", "PostgreSQL"],
+      "teamSize": 5,
+      "currentTeam": 3,
+      "budget": "150000",
+      "timeline": "3 месяца",
+      "complexity": "Средняя",
+      "image": "/projects/bronfood.jpg",
+      "features": [
+        "Каталог блюд с фильтрацией",
+        "Корзина и система заказов",
+        "Интеграция с платежными системами",
+        "Трекинг доставки в реальном времени",
+        "Админ панель для ресторанов"
+      ],
+      "requirements": [
+        "Опыт с React/TypeScript от 1 года",
+        "Знание Redux Toolkit",
+        "Понимание REST API",
+        "Опыт с Git"
+      ],
+      "ownerId": 3,
+      "teamMembers": [1, 2],
+      "createdAt": "2024-08-01T12:00:00Z",
+      "updatedAt": "2024-08-10T14:30:00Z"
+    },
+    {
+      "id": 2,
+      "name": "CRM для автосервиса",
+      "description": "Система управления клиентами и заказами для автосервиса с календарем записи",
+      "status": "Планирование",
+      "lookingFor": "Ищем backend разработчика",
+      "category": "Business",
+      "tech": ["Vue.js", "Express", "MongoDB", "Socket.io"],
+      "teamSize": 4,
+      "currentTeam": 2,
+      "budget": "200000",
+      "timeline": "4 месяца",
+      "complexity": "Высокая",
+      "image": "/projects/autoservice-crm.jpg",
+      "features": [
+        "База данных клиентов и автомобилей",
+        "Календарь записи на сервис",
+        "Система уведомлений",
+        "Учет запчастей и услуг",
+        "Отчетность и аналитика"
+      ],
+      "requirements": [
+        "Опыт с Node.js/Express от 2 лет",
+        "Знание MongoDB",
+        "Опыт с WebSocket",
+        "Понимание архитектуры REST API"
+      ],
+      "ownerId": 2,
+      "teamMembers": [1],
+      "createdAt": "2024-07-15T09:00:00Z",
+      "updatedAt": "2024-08-05T11:15:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Мобильное приложение для фитнеса",
+      "description": "React Native приложение для трекинга тренировок и питания",
+      "status": "Идея",
+      "lookingFor": "Набираем команду с нуля",
+      "category": "Mobile",
+      "tech": ["React Native", "Firebase", "Redux", "TypeScript"],
+      "teamSize": 6,
+      "currentTeam": 1,
+      "budget": "300000",
+      "timeline": "6 месяцев",
+      "complexity": "Высокая",
+      "image": "/projects/fitness-app.jpg",
+      "features": [
+        "Трекинг тренировок",
+        "База упражнений с видео",
+        "Планировщик питания",
+        "Социальные функции",
+        "Интеграция с носимыми устройствами"
+      ],
+      "requirements": [
+        "Опыт с React Native от 1 года",
+        "Знание Firebase",
+        "Понимание мобильной разработки",
+        "Опыт с Redux"
+      ],
+      "ownerId": 1,
+      "teamMembers": [],
+      "createdAt": "2024-08-10T16:20:00Z",
+      "updatedAt": "2024-08-10T16:20:00Z"
+    }
+  ],
+  "roles": [
+    {
+      "id": "junior",
+      "name": "Джун",
+      "description": "Начинающий разработчик",
+      "variant": "outline",
+      "color": "#2c91dc"
+    },
+    {
+      "id": "middle",
+      "name": "Мидл",
+      "description": "Разработчик среднего уровня",
+      "variant": "primary",
+      "color": "#27ae60"
+    },
+    {
+      "id": "senior",
+      "name": "Синьор",
+      "description": "Опытный разработчик",
+      "variant": "secondary",
+      "color": "#f39c12"
+    },
+    {
+      "id": "teamlead",
+      "name": "Тимлид",
+      "description": "Руководитель команды",
+      "variant": "ghost",
+      "color": "#e74c3c"
+    },
+    {
+      "id": "client",
+      "name": "Заказчик",
+      "description": "Заказчик проекта",
+      "variant": "success",
+      "color": "#9b59b6"
+    }
+  ],
+  "technologies": [
+    {
+      "id": 1,
+      "name": "React",
+      "category": "Frontend",
+      "icon": "/tech/react.svg",
+      "color": "#61DAFB"
+    },
+    {
+      "id": 2,
+      "name": "TypeScript",
+      "category": "Language",
+      "icon": "/tech/typescript.svg",
+      "color": "#3178C6"
+    },
+    {
+      "id": 3,
+      "name": "Node.js",
+      "category": "Backend",
+      "icon": "/tech/nodejs.svg",
+      "color": "#339933"
+    },
+    {
+      "id": 4,
+      "name": "Vue.js",
+      "category": "Frontend",
+      "icon": "/tech/vue.svg",
+      "color": "#4FC08D"
+    },
+    {
+      "id": 5,
+      "name": "PostgreSQL",
+      "category": "Database",
+      "icon": "/tech/postgresql.svg",
+      "color": "#4169E1"
+    },
+    {
+      "id": 6,
+      "name": "MongoDB",
+      "category": "Database",
+      "icon": "/tech/mongodb.svg",
+      "color": "#47A248"
+    }
+  ],
+  "categories": [
+    {
+      "id": "ecommerce",
+      "name": "E-commerce",
+      "description": "Интернет-магазины и платформы продаж",
+      "color": "#e74c3c"
+    },
+    {
+      "id": "business",
+      "name": "Business",
+      "description": "Корпоративные и бизнес приложения",
+      "color": "#3498db"
+    },
+    {
+      "id": "mobile",
+      "name": "Mobile",
+      "description": "Мобильные приложения",
+      "color": "#9b59b6"
+    },
+    {
+      "id": "social",
+      "name": "Social",
+      "description": "Социальные сети и платформы",
+      "color": "#2ecc71"
+    },
+    {
+      "id": "education",
+      "name": "Education",
+      "description": "Образовательные платформы",
+      "color": "#f39c12"
+    }
+  ]
+}

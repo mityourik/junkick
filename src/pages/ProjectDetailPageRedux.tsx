@@ -1,54 +1,64 @@
 import { useParams, Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { api, type Project, type User } from '../api';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import {
+  fetchProjectById,
+  selectCurrentProject,
+  selectProjectsLoading,
+  selectProjectsError,
+  clearCurrentProject,
+} from '../store/projectsSlice';
+import {
+  fetchUserById,
+  selectUserById,
+  selectTeamMembers,
+  selectUsersLoading,
+} from '../store/usersSlice';
 
-export default function ProjectDetailPage() {
+export default function ProjectDetailPageRedux() {
   const { id } = useParams<{ id: string }>();
-  const [project, setProject] = useState<Project | null>(null);
-  const [owner, setOwner] = useState<User | null>(null);
-  const [teamMembers, setTeamMembers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+
+  // Селекторы Redux
+  const project = useAppSelector(selectCurrentProject);
+  const projectsLoading = useAppSelector(selectProjectsLoading);
+  const projectsError = useAppSelector(selectProjectsError);
+  const usersLoading = useAppSelector(selectUsersLoading);
+  const teamMembers = useAppSelector(selectTeamMembers);
+
+  // Получаем владельца проекта из кеша
+  const owner = useAppSelector(state => (project ? selectUserById(project.ownerId)(state) : null));
 
   useEffect(() => {
-    const fetchProjectData = async () => {
-      if (!id || isNaN(Number(id))) {
-        setError('Invalid project ID');
-        setLoading(false);
-        return;
-      }
+    const loadProject = async () => {
+      if (!id || isNaN(Number(id))) return;
 
-      try {
-        setLoading(true);
+      // Очищаем текущий проект при смене ID
+      dispatch(clearCurrentProject());
 
-        // Получаем проект по ID
-        const projectData = await api.projects.getById(Number(id));
-        setProject(projectData);
+      // Загружаем проект
+      const result = await dispatch(fetchProjectById(Number(id)));
 
-        // Получаем владельца проекта
-        const ownerData = await api.users.getById(projectData.ownerId);
-        setOwner(ownerData);
+      // Если проект загружен успешно, загружаем владельца и команду
+      if (fetchProjectById.fulfilled.match(result)) {
+        const projectData = result.payload;
 
-        // Получаем участников команды
-        if (projectData.teamMembers.length > 0) {
-          const membersPromises = projectData.teamMembers.map(memberId =>
-            api.users.getById(memberId),
-          );
-          const membersData = await Promise.all(membersPromises);
-          setTeamMembers(membersData);
-        }
-      } catch (err) {
-        console.error('Error fetching project:', err);
-        setError('Failed to load project data');
-      } finally {
-        setLoading(false);
+        // Загружаем владельца
+        dispatch(fetchUserById(projectData.ownerId));
+
+        // Загружаем участников команды
+        projectData.teamMembers.forEach(memberId => {
+          dispatch(fetchUserById(memberId));
+        });
       }
     };
 
-    fetchProjectData();
-  }, [id]);
+    loadProject();
+  }, [id, dispatch]);
 
-  if (loading) {
+  const loading = projectsLoading || usersLoading;
+
+  if (loading && !project) {
     return (
       <div className="container" style={{ padding: '2rem 0', textAlign: 'center' }}>
         <h2>Loading...</h2>
@@ -56,15 +66,22 @@ export default function ProjectDetailPage() {
     );
   }
 
-  if (error || !project) {
+  if (projectsError || (!project && !loading)) {
     return (
       <div className="container" style={{ padding: '2rem 0' }}>
         <h1>Project Not Found</h1>
-        <p>{error || 'The requested project could not be found.'}</p>
+        <p>{projectsError || 'The requested project could not be found.'}</p>
         <Link to="/projects">← Back to Projects</Link>
       </div>
     );
   }
+
+  if (!project) return null;
+
+  // Получаем участников команды из кеша
+  const teamMembersArray = project.teamMembers
+    .map(memberId => teamMembers[memberId])
+    .filter(Boolean);
 
   return (
     <div className="container" style={{ padding: '2rem 0' }}>
@@ -160,7 +177,7 @@ export default function ProjectDetailPage() {
 
             <div>
               <h3>Project Owner</h3>
-              {owner && (
+              {owner ? (
                 <div
                   style={{
                     display: 'flex',
@@ -180,10 +197,12 @@ export default function ProjectDetailPage() {
                     <div style={{ fontSize: '0.875rem', marginTop: '0.25rem' }}>{owner.bio}</div>
                   </div>
                 </div>
+              ) : (
+                <div style={{ color: '#666', fontStyle: 'italic' }}>Loading owner...</div>
               )}
             </div>
 
-            {teamMembers.length > 0 && (
+            {teamMembersArray.length > 0 && (
               <div>
                 <h3>Team Members</h3>
                 <div
@@ -194,7 +213,7 @@ export default function ProjectDetailPage() {
                     gap: '0.5rem',
                   }}
                 >
-                  {teamMembers.map(member => (
+                  {teamMembersArray.map(member => (
                     <div
                       key={member.id}
                       style={{

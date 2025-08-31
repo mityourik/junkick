@@ -30,6 +30,21 @@ body {
   margin: 0;
 }
 
+// App root as flex column layout to keep nav at bottom
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  // Prevent content from being hidden under fixed navbar
+  padding-bottom: var(--navbar-height);
+}
+
 // Typography
 h1, h2, h3, h4, h5, h6 {
   font-weight: font-weight(semibold);

@@ -9,7 +9,6 @@ import NotFoundPage from './pages/NotFoundPage';
 export const App = () => {
   return (
     <BrowserRouter>
-      <Navigation />
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -19,6 +18,7 @@ export const App = () => {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
+      <Navigation />
     </BrowserRouter>
   );
 };

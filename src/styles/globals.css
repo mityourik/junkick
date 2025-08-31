@@ -18,7 +18,7 @@
   --color-text-light: #888;
   --color-background: #ffffff;
   --color-surface: #f9f9f9;
-  --color-border: #e5e5e5;
+  --color-border: #000000;
 
   /* Spacing Scale (mobile-first) */
   --space-4xs: 0.05rem; /* 2px */

@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from './store/counterSlice';
+import projectsReducer from './store/projectsSlice';
+import usersReducer from './store/usersSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    projects: projectsReducer,
+    users: usersReducer,
   },
 });
 
-export type CounterState = ReturnType<typeof counterReducer>;
-export type RootState = { counter: CounterState };
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

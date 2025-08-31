@@ -17,7 +17,7 @@ export const Navigation = () => {
         <ul className="navbar__menu">
           <li>
             <Link to="/" className={`navbar__link ${isActive('/') ? 'navbar__link--active' : ''}`}>
-              Home
+              На главную
             </Link>
           </li>
           <li>
@@ -25,7 +25,7 @@ export const Navigation = () => {
               to="/projects"
               className={`navbar__link ${isActive('/projects') ? 'navbar__link--active' : ''}`}
             >
-              Projects
+              Проекты
             </Link>
           </li>
           <li>
@@ -33,7 +33,7 @@ export const Navigation = () => {
               to="/login"
               className={`navbar__link ${isActive('/login') ? 'navbar__link--active' : ''}`}
             >
-              Login
+              Войти
             </Link>
           </li>
         </ul>

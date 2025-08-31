@@ -5,9 +5,15 @@
 @use '../abstracts' as *;
 
 .homepage {
+  // Make homepage occupy available height and stick content to bottom
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
   &__hero {
     text-align: center;
-    padding: space(2xl) 0;
+    padding: space(xl) 0;
 
     @include desktop-up {
       padding: space(xl) 0;
@@ -42,7 +48,15 @@
   // }
 
   &__features {
-    padding: space(3xl) 0;
+    // Keep some breathing room while anchored to bottom
+    // padding: space(3xl) 0;
+
+    &-container {
+      @include container;
+      flex-direction: column-reverse;
+
+      display: flex;
+    }
 
     @include desktop-up {
       padding: space(xl) 0;
@@ -54,6 +68,8 @@
 
     & {
       margin-top: space(xl);
+      display: flex;
+      flex-direction: column-reverse;
     }
   }
 }

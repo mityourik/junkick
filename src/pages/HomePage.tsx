@@ -4,16 +4,9 @@ import { RoleButtonsList } from '../components/RolesButtonsList';
 export const HomePage = () => {
   return (
     <div className="homepage">
-      <section className="homepage__hero">
-        <div className="container">
-          <h1 className="homepage__title">это сработает!</h1>
-          <RoleButtonsList />
-        </div>
-      </section>
-
       <section className="homepage__features">
-        <div className="container">
-          <h2 className="text-center">Проекты уже в работе:</h2>
+        <div className="container homepage__features-container">
+          <h2 className="text-center">вступай в проекты</h2>
           <div className="homepage__features-grid">
             {/* Карточки проектов */}
             <ProjectCard />
@@ -36,6 +29,13 @@ export const HomePage = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="homepage__hero">
+        <div className="container">
+          <h1 className="homepage__title">выбери свою роль</h1>
+          <RoleButtonsList />
         </div>
       </section>
     </div>
