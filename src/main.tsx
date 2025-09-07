@@ -3,7 +3,10 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { App } from './App.tsx';
 import './scss/main.scss';
+import { initTimeTheme } from './theme';
 import { store } from './store';
+
+initTimeTheme();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

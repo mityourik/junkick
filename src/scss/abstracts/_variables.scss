@@ -4,7 +4,6 @@
 
 @use 'sass:map';
 
-// CSS Custom Properties для цветов с темной темой
 :root {
   // Светлая тема (по умолчанию)
   --color-primary: #2c91dc;
@@ -35,6 +34,32 @@
     --color-surface: #1a1a1a;
     --color-border: #404040;
   }
+}
+
+// Принудительное управление темой через атрибут на :root
+:root[data-theme='light'] {
+  --color-primary: #2c91dc;
+  --color-primary-hover: #086dbb;
+  --color-secondary: #f39c12;
+  --color-success: #27ae60;
+  --color-warning: #f1c40f;
+  --color-danger: #e74c3c;
+
+  --color-text: #213547;
+  --color-text-light: #888;
+  --color-text-muted: #6c757d;
+
+  --color-background: #ffffff;
+  --color-surface: #f9f9f9;
+  --color-border: #000000;
+}
+
+:root[data-theme='dark'] {
+  --color-text: rgba(255, 255, 255, 0.87);
+  --color-text-light: #888;
+  --color-background: #242424;
+  --color-surface: #1a1a1a;
+  --color-border: #404040;
 }
 
 // Sass map для обратной совместимости
