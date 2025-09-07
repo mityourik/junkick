@@ -5,8 +5,19 @@ import { App } from './App.tsx';
 import './scss/main.scss';
 import { initTimeTheme } from './theme';
 import { store } from './store';
+import { setCurrentUser } from './store/usersSlice';
 
 initTimeTheme();
+
+try {
+  const raw = localStorage.getItem('currentUser');
+  if (raw) {
+    const user = JSON.parse(raw);
+    if (user && user.id) store.dispatch(setCurrentUser(user));
+  }
+} catch {
+  // Пока ничего
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

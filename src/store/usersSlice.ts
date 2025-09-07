@@ -32,6 +32,9 @@ const usersSlice = createSlice({
     setCurrentUser: (state, action: PayloadAction<User>) => {
       state.currentUser = action.payload;
     },
+    clearCurrentUser: state => {
+      state.currentUser = null;
+    },
     addTeamMember: (state, action: PayloadAction<User>) => {
       state.teamMembers[action.payload.id] = action.payload;
     },
@@ -69,7 +72,7 @@ const usersSlice = createSlice({
   },
 });
 
-export const { setCurrentUser, addTeamMember, clearError } = usersSlice.actions;
+export const { setCurrentUser, clearCurrentUser, addTeamMember, clearError } = usersSlice.actions;
 
 export const selectUsers = (state: { users: UsersState }) => state.users.users;
 export const selectCurrentUser = (state: { users: UsersState }) => state.users.currentUser;

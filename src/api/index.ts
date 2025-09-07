@@ -20,9 +20,10 @@ async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promi
 }
 
 export interface User {
-  id: number;
+  id: number | string;
   name: string;
   email: string;
+  password?: string;
   role: string;
   avatar: string;
   skills: string[];
@@ -90,10 +91,19 @@ export interface Category {
 
 export const usersApi = {
   getAll: () => apiRequest<User[]>('/users'),
-  getById: async (id: number) => {
-    const list = await apiRequest<User[]>(`/users?id=${id}`);
+  getById: async (id: number | string) => {
+    const list = await apiRequest<User[]>(`/users?id=${encodeURIComponent(String(id))}`);
     if (!Array.isArray(list) || list.length === 0) {
       throw new Error('User not found');
+    }
+    return list[0];
+  },
+  findByEmailPassword: async (email: string, password: string) => {
+    const list = await apiRequest<User[]>(
+      `/users?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`,
+    );
+    if (!Array.isArray(list) || list.length === 0) {
+      throw new Error('Invalid credentials');
     }
     return list[0];
   },
@@ -163,8 +173,16 @@ export const applicationsApi = {
       method: 'POST',
       body: JSON.stringify(app),
     }),
-  getByProject: (projectId: number) =>
-    apiRequest<Application[]>(`/applications?projectId=${projectId}`),
+  getByProject: (projectId: number | string) =>
+    apiRequest<Application[]>(`/applications?projectId=${encodeURIComponent(String(projectId))}`),
+};
+
+export const authApi = {
+  logout: (userId: number | string) =>
+    apiRequest('/sessions', {
+      method: 'POST',
+      body: JSON.stringify({ userId, type: 'logout', createdAt: new Date().toISOString() }),
+    }),
 };
 
 export const api = {
@@ -174,6 +192,7 @@ export const api = {
   technologies: technologiesApi,
   categories: categoriesApi,
   applications: applicationsApi,
+  auth: authApi,
 };
 
 export default api;

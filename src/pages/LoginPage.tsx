@@ -1,54 +1,71 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setCurrentUser } from '../store/usersSlice';
+import { api } from '../api';
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  interface LocationState {
+    from?: string;
+  }
+  const from = (location.state as LocationState)?.from || '/';
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (username && password) {
-      alert('Login successful!');
-      navigate('/');
-    } else {
-      alert('Please enter username and password');
+    try {
+      setError(null);
+      const user = await api.users.findByEmailPassword(email, password);
+      dispatch(setCurrentUser(user));
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      navigate(from, { replace: true });
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Ошибка входа');
+      }
     }
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '2rem auto', padding: '2rem' }}>
-      <h1>Login</h1>
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
-      >
-        <div>
-          <label htmlFor="username">Username:</label>
+    <div className="container" style={{ maxWidth: 480, padding: '2rem 0' }}>
+      <h1>Вход</h1>
+      {error && <div style={{ color: 'tomato', marginBottom: '1rem' }}>{error}</div>}
+      <form onSubmit={handleSubmit} className="form">
+        <div className="form__group">
+          <label htmlFor="email">Email</label>
           <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            style={{ width: '100%', padding: '0.5rem', marginTop: '0.25rem' }}
+            id="email"
+            className="input"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        <div className="form__group">
+          <label htmlFor="password">Пароль</label>
           <input
-            type="password"
             id="password"
+            type="password"
+            className="input"
             value={password}
             onChange={e => setPassword(e.target.value)}
-            style={{ width: '100%', padding: '0.5rem', marginTop: '0.25rem' }}
           />
         </div>
-        <button type="submit" style={{ padding: '0.75rem' }}>
-          Login
-        </button>
+        <div className="form__actions">
+          <button className="btn btn--primary">Войти</button>
+          <Link to="/register" className="btn btn--ghost">
+            Регистрация
+          </Link>
+        </div>
       </form>
-      <Link to="/" style={{ marginTop: '2rem', display: 'inline-block' }}>
-        ← Back to Home
+      <Link to="/" className="projects-page__back">
+        ← На главную
       </Link>
     </div>
   );

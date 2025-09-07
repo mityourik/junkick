@@ -4,6 +4,7 @@
       "id": "1",
       "name": "Дмитрий Иванов",
       "email": "dmitriy@junkick.ru",
+      "password": "demo123",
       "role": "джун",
       "avatar": "/avatars/dmitriy.jpg",
       "skills": ["React", "TypeScript", "SCSS"],
@@ -17,6 +18,7 @@
       "id": "2",
       "name": "Анна Смирнова",
       "email": "anna@junkick.ru",
+      "password": "demo123",
       "role": "тимлид",
       "avatar": "/avatars/anna.jpg",
       "skills": ["React", "Node.js", "PostgreSQL", "Team Leadership"],
@@ -30,6 +32,7 @@
       "id": "3",
       "name": "Максим Петров",
       "email": "maxim@junkick.ru",
+      "password": "demo123",
       "role": "заказчик",
       "avatar": "/avatars/maxim.jpg",
       "skills": ["Product Management", "UX/UI", "Analytics"],
@@ -38,6 +41,20 @@
       "location": "Новосибирск",
       "portfolio": "https://behance.net/maxim-petrov",
       "createdAt": "2023-12-01T15:45:00Z"
+    },
+    {
+      "id": "0be9",
+      "name": "Имя",
+      "email": "asd@ya.ru",
+      "password": "asd123",
+      "role": "тимлид",
+      "avatar": "",
+      "skills": [],
+      "bio": "",
+      "experience": 0,
+      "location": "",
+      "portfolio": "",
+      "createdAt": "2025-09-07T20:04:31.930Z"
     }
   ],
   "projects": [
@@ -514,6 +531,26 @@
       "role": "джун",
       "message": "ваываываваыа",
       "createdAt": "2025-09-07T18:58:41.846Z"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "96e4",
+      "userId": "0be9",
+      "type": "logout",
+      "createdAt": "2025-09-07T20:09:45.359Z"
+    },
+    {
+      "id": "70ca",
+      "userId": "1",
+      "type": "logout",
+      "createdAt": "2025-09-07T20:16:17.784Z"
+    },
+    {
+      "id": "664d",
+      "userId": "1",
+      "type": "logout",
+      "createdAt": "2025-09-07T20:16:55.652Z"
     }
   ]
 }
