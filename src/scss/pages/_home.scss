@@ -52,10 +52,10 @@
     // padding: space(3xl) 0;
 
     &-container {
-      @include container;
-      flex-direction: column-reverse;
-
+      // Declarations first to avoid Sass mixed-decls warning
       display: flex;
+      flex-direction: column-reverse;
+      @include container;
     }
 
     @include desktop-up {
@@ -64,12 +64,11 @@
   }
 
   &__features-grid {
-    @include grid-responsive(1, 2, 3);
+    // Две колонки на мобильных, три на шире — как на /projects
+    @include grid-responsive(2, 3, 3);
 
     & {
       margin-top: space(xl);
-      display: flex;
-      flex-direction: column-reverse;
     }
   }
 }

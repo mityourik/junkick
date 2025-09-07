@@ -1,35 +1,76 @@
-import { Link } from 'react-router-dom';
-
-const projects = [
-  { id: 1, name: 'E-commerce App', tech: 'React, Node.js, MongoDB' },
-  { id: 2, name: 'Task Manager', tech: 'Vue.js, Express, PostgreSQL' },
-  { id: 3, name: 'Social Media Dashboard', tech: 'React, Redux, Firebase' },
-];
+import { Link, useSearchParams } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { api, type Project } from '../api';
+import { ProjectCard } from '../components/ProjectCard';
 
 export default function ProjectsPage() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [params] = useSearchParams();
+
+  useEffect(() => {
+    let cancelled = false;
+    const load = async () => {
+      try {
+        setLoading(true);
+        const projectsData = await api.projects.getAll();
+        if (!cancelled) setProjects(projectsData);
+      } catch (e) {
+        console.error(e);
+        if (!cancelled) setError('Не удалось загрузить проекты');
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const filtered = useMemo(() => {
+    const role = params.get('role');
+    if (!role) return projects;
+    return projects.filter(p => p.neededRoles?.some(r => r.toLowerCase() === role.toLowerCase()));
+  }, [params, projects]);
+
+  if (loading) {
+    return (
+      <div className="container projects-page projects-page--centered">
+        <h2>Загрузка проектов...</h2>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container projects-page">
+        <h2>Ошибка</h2>
+        <p>{error}</p>
+        <Link to="/">На главную</Link>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <h1>My Projects</h1>
-      <div style={{ display: 'grid', gap: '1rem', marginTop: '2rem' }}>
-        {projects.map(project => (
-          <div
-            key={project.id}
-            style={{ padding: '1rem', border: '1px solid #ccc', borderRadius: '8px' }}
-          >
-            <h3>
-              <Link
-                to={`/projects/${project.id}`}
-                style={{ textDecoration: 'none', color: '#646cff' }}
-              >
-                {project.name}
-              </Link>
-            </h3>
-            <p>Technologies: {project.tech}</p>
-          </div>
+    <div className="container projects-page">
+      <h1>Проекты</h1>
+      {params.get('role') && (
+        <div className="projects-page__filter">
+          Фильтр по роли: <strong>{params.get('role')}</strong>{' '}
+          <Link to="/projects" className="projects-page__reset">
+            сбросить
+          </Link>
+        </div>
+      )}
+      <div className="projects-page__grid">
+        {filtered.map(project => (
+          <ProjectCard key={project.id} project={project} />
         ))}
       </div>
-      <Link to="/" style={{ marginTop: '2rem', display: 'inline-block' }}>
-        ← Back to Home
+      <Link to="/" className="projects-page__back">
+        ← На главную
       </Link>
     </div>
   );

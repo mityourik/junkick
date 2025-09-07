@@ -1,19 +1,16 @@
-// Типы для размеров иконок
 type IconSize = 'sm' | 'md' | 'lg' | 'xl';
 
-// Интерфейс для пропсов иконки
 interface IconProps {
-  name?: string; // имя предустановленной иконки
-  size?: IconSize; // размер
-  className?: string; // доп. классы
-  color?: string; // управление цветом для SVG
-  src?: string; // путь к внешнему png/svg файлу (public или import)
-  alt?: string; // alt для изображений
-  custom?: React.ReactNode; // кастомный React-узел
-  ariaLabel?: string; // доступность
+  name?: string;
+  size?: IconSize;
+  className?: string;
+  color?: string;
+  src?: string;
+  alt?: string;
+  custom?: React.ReactNode;
+  ariaLabel?: string;
 }
 
-// Компонент иконки
 export const Icon = ({
   name,
   size = 'md',
@@ -24,7 +21,6 @@ export const Icon = ({
   custom,
   ariaLabel,
 }: IconProps) => {
-  // Определяем SVG иконки
   const icons = {
     logo: (
       <svg viewBox="0 0 100 100" fill="currentColor">
@@ -103,8 +99,6 @@ export const Icon = ({
     ),
   };
 
-  // Получаем нужную иконку
-  // 1. custom приоритет
   if (custom) {
     return (
       <span className={`icon icon--${size} ${className}`} aria-label={ariaLabel} style={{ color }}>
@@ -113,7 +107,6 @@ export const Icon = ({
     );
   }
 
-  // 2. внешнее изображение (png/svg/webp)
   if (src) {
     return (
       <span className={`icon icon--${size} ${className}`} aria-label={ariaLabel}>
@@ -122,7 +115,6 @@ export const Icon = ({
     );
   }
 
-  // 3. встроенный svg по name
   if (name) {
     const IconSvg = icons[name as keyof typeof icons];
     if (!IconSvg) {
@@ -144,5 +136,4 @@ export const Icon = ({
   return null;
 };
 
-// Экспорт типов для использования в других компонентах
 export type { IconProps, IconSize };

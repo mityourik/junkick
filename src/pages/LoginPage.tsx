@@ -8,7 +8,6 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simple mock login
     if (username && password) {
       alert('Login successful!');
       navigate('/');

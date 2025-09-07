@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
 import { api, type User } from '../api';
 
-// Async thunks для API операций
 export const fetchUsers = createAsyncThunk('users/fetchAll', async () => {
   return await api.users.getAll();
 });
@@ -10,11 +9,10 @@ export const fetchUserById = createAsyncThunk('users/fetchById', async (id: numb
   return await api.users.getById(id);
 });
 
-// Состояние slice
 interface UsersState {
   users: User[];
   currentUser: User | null;
-  teamMembers: Record<number, User>; // кеш участников команд по ID
+  teamMembers: Record<number, User>;
   loading: boolean;
   error: string | null;
 }
@@ -42,7 +40,6 @@ const usersSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    // Fetch all users
     builder
       .addCase(fetchUsers.pending, state => {
         state.loading = true;
@@ -57,7 +54,6 @@ const usersSlice = createSlice({
         state.error = action.error.message || 'Failed to fetch users';
       })
 
-      // Fetch user by ID
       .addCase(fetchUserById.pending, state => {
         state.loading = true;
         state.error = null;
@@ -75,7 +71,6 @@ const usersSlice = createSlice({
 
 export const { setCurrentUser, addTeamMember, clearError } = usersSlice.actions;
 
-// Селекторы
 export const selectUsers = (state: { users: UsersState }) => state.users.users;
 export const selectCurrentUser = (state: { users: UsersState }) => state.users.currentUser;
 export const selectTeamMembers = (state: { users: UsersState }) => state.users.teamMembers;

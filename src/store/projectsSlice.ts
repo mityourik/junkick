@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
 import { api, type Project } from '../api';
 
-// Async thunks для API операций
 export const fetchProjects = createAsyncThunk('projects/fetchAll', async () => {
   return await api.projects.getAll();
 });
@@ -14,7 +13,6 @@ export const searchProjects = createAsyncThunk('projects/search', async (query: 
   return await api.projects.search(query);
 });
 
-// Состояние slice
 interface ProjectsState {
   projects: Project[];
   currentProject: Project | null;
@@ -51,7 +49,6 @@ const projectsSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    // Fetch all projects
     builder
       .addCase(fetchProjects.pending, state => {
         state.loading = true;
@@ -66,7 +63,6 @@ const projectsSlice = createSlice({
         state.error = action.error.message || 'Failed to fetch projects';
       })
 
-      // Fetch project by ID
       .addCase(fetchProjectById.pending, state => {
         state.loading = true;
         state.error = null;
@@ -80,7 +76,6 @@ const projectsSlice = createSlice({
         state.error = action.error.message || 'Failed to fetch project';
       })
 
-      // Search projects
       .addCase(searchProjects.pending, state => {
         state.loading = true;
         state.error = null;
@@ -98,7 +93,6 @@ const projectsSlice = createSlice({
 
 export const { setFilters, clearCurrentProject, clearError } = projectsSlice.actions;
 
-// Селекторы
 export const selectProjects = (state: { projects: ProjectsState }) => state.projects.projects;
 export const selectCurrentProject = (state: { projects: ProjectsState }) =>
   state.projects.currentProject;

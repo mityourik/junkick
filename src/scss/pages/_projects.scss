@@ -1,0 +1,34 @@
+// =============================================
+// СТРАНИЦА ПРОЕКТОВ
+// =============================================
+
+@use '../abstracts' as *;
+
+.projects-page {
+  padding: 20px 10px 0 10px;
+
+  &--centered {
+    text-align: center;
+  }
+
+  &__filter {
+    margin-top: space(sm); // ~0.5rem
+    color: color(text-muted);
+    font-size: 0.9rem;
+  }
+
+  &__reset {
+    margin-left: space(sm);
+  }
+
+  &__back {
+    margin: 20px 0 15px 0;
+    display: inline-block;
+  }
+
+  &__grid {
+    gap: space(md);
+    margin-top: space(xl);
+    @include grid-responsive(2, 3, 3);
+  }
+}

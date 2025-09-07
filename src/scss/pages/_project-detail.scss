@@ -1,0 +1,137 @@
+// =============================================
+// СТРАНИЦА ДЕТАЛЕЙ ПРОЕКТА
+// =============================================
+
+@use '../abstracts' as *;
+
+.project-detail {
+  padding: space(2xl) 0;
+
+  &--centered {
+    text-align: center;
+  }
+
+  // Шапка карточки
+  .card__header {
+    &-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: space(md);
+    }
+
+    .card__status {
+      padding: 0.25rem 0.5rem;
+      border-radius: radius(sm);
+      background-color: #e3f2fd;
+      color: #1565c0;
+      font-size: font-size(sm); // ~0.875rem
+      display: inline-flex;
+      align-items: center;
+    }
+
+    &-wanted-roles {
+      margin-left: 0.5rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: radius(sm);
+      background-color: #f3e5f5;
+      color: #7b1fa2;
+      font-size: font-size(sm);
+      display: inline-flex;
+      align-items: center;
+    }
+
+    &-meta {
+      text-align: right;
+      font-size: font-size(sm);
+      color: color(text-muted);
+    }
+  }
+
+  // Тело
+  &__title {
+    margin-bottom: space(md);
+  }
+
+  &__description {
+    font-size: 1.1rem;
+    margin-bottom: space(2xl);
+    line-height: 1.6;
+  }
+
+  &__sections {
+    display: grid;
+    gap: space(2xl);
+  }
+
+  // Технологии
+  &__tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  &__tech {
+    padding: 0.25rem 0.75rem;
+    background-color: #f5f5f5;
+    border-radius: 1rem;
+    font-size: font-size(sm);
+    border: 1px solid #e0e0e0;
+  }
+
+  // Списки
+  &__list {
+    margin-top: 0.5rem;
+    padding-left: 1.5rem;
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  // Владелец
+  &__owner {
+    display: flex;
+    align-items: center;
+    gap: space(md);
+    margin-top: 0.5rem;
+    padding: space(md);
+    background-color: color(surface);
+    border-radius: radius(md);
+  }
+
+  &__owner-name { font-weight: 600; }
+  &__owner-meta { font-size: font-size(sm); color: color(text-muted); }
+  &__owner-bio { font-size: font-size(sm); margin-top: space(xs); }
+
+  // Команда
+  &__team {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__team-item {
+    display: flex;
+    align-items: center;
+    gap: space(md);
+    padding: 0.75rem;
+    background-color: color(surface);
+    border-radius: radius(md);
+  }
+
+  &__team-name { font-weight: 500; }
+  &__team-meta { font-size: font-size(sm); color: color(text-muted); }
+
+  // Футер
+  &__footer {
+    margin-top: space(2xl);
+    padding-top: space(md);
+    border-top: 1px solid color(border);
+
+    // Отступ между ссылками
+    a + a { margin-left: space(md); }
+  }
+}

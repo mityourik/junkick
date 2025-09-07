@@ -1,7 +1,5 @@
-// API базовая настройка
 const API_BASE_URL = 'http://localhost:3001';
 
-// Универсальная функция для HTTP запросов
 async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
   const config: RequestInit = {
@@ -21,7 +19,6 @@ async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promi
   return response.json();
 }
 
-// Типы данных
 export interface User {
   id: number;
   name: string;
@@ -44,6 +41,7 @@ export interface Project {
   lookingFor: string;
   category: string;
   tech: string[];
+  neededRoles: string[];
   teamSize: number;
   currentTeam: number;
   budget: string;
@@ -81,10 +79,15 @@ export interface Category {
   color: string;
 }
 
-// API функции для пользователей
 export const usersApi = {
   getAll: () => apiRequest<User[]>('/users'),
-  getById: (id: number) => apiRequest<User>(`/users/${id}`),
+  getById: async (id: number) => {
+    const list = await apiRequest<User[]>(`/users?id=${id}`);
+    if (!Array.isArray(list) || list.length === 0) {
+      throw new Error('User not found');
+    }
+    return list[0];
+  },
   create: (user: Omit<User, 'id'>) =>
     apiRequest<User>('/users', {
       method: 'POST',
@@ -101,10 +104,15 @@ export const usersApi = {
     }),
 };
 
-// API функции для проектов
 export const projectsApi = {
   getAll: () => apiRequest<Project[]>('/projects'),
-  getById: (id: number) => apiRequest<Project>(`/projects/${id}`),
+  getById: async (id: number) => {
+    const list = await apiRequest<Project[]>(`/projects?id=${id}`);
+    if (!Array.isArray(list) || list.length === 0) {
+      throw new Error('Project not found');
+    }
+    return list[0];
+  },
   getByCategory: (category: string) => apiRequest<Project[]>(`/projects?category=${category}`),
   getByStatus: (status: string) => apiRequest<Project[]>(`/projects?status=${status}`),
   create: (project: Omit<Project, 'id'>) =>
@@ -121,30 +129,25 @@ export const projectsApi = {
     apiRequest<void>(`/projects/${id}`, {
       method: 'DELETE',
     }),
-  // Поиск проектов
   search: (query: string) => apiRequest<Project[]>(`/projects?q=${encodeURIComponent(query)}`),
 };
 
-// API функции для ролей
 export const rolesApi = {
   getAll: () => apiRequest<Role[]>('/roles'),
   getById: (id: string) => apiRequest<Role>(`/roles/${id}`),
 };
 
-// API функции для технологий
 export const technologiesApi = {
   getAll: () => apiRequest<Technology[]>('/technologies'),
   getByCategory: (category: string) =>
     apiRequest<Technology[]>(`/technologies?category=${category}`),
 };
 
-// API функции для категорий
 export const categoriesApi = {
   getAll: () => apiRequest<Category[]>('/categories'),
   getById: (id: string) => apiRequest<Category>(`/categories/${id}`),
 };
 
-// Экспорт всех API
 export const api = {
   users: usersApi,
   projects: projectsApi,

@@ -1,19 +1,29 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import type { Project } from '../api';
 
-export const ProjectCard = () => {
-  const [projectStatus, _setProjectStatus] = useState('В разработке');
-  const [projectName, _setProjectName] = useState('Сайт доставки Bronfood');
-  const statusLookingFor = 'Набираем команду';
+interface ProjectCardProps {
+  project: Project;
+  showTech?: boolean;
+  showTeam?: boolean;
+}
 
+export const ProjectCard = ({ project, showTech = true, showTeam = true }: ProjectCardProps) => {
   return (
-    <Link to={`/projects/${projectName}`} className="card card--link">
+    <Link to={`/projects/${project.id}`} className="card card--link card--project">
       <div className="card__header">
-        <p className="card__status">{projectStatus}</p>
-        <p className="card__status-looking-for">{statusLookingFor}</p>
+        <span className="card__status">{project.status}</span>
+        <span className="card__status-looking-for">{project.lookingFor}</span>
       </div>
       <div className="card__body">
-        <h3 className="card__title">{projectName}</h3>
+        <h3 className="card__title">{project.name}</h3>
+        {showTech && (
+          <div className="card__meta">Технологии: {project.tech.slice(0, 4).join(', ')}</div>
+        )}
+        {showTeam && (
+          <div className="card__meta">
+            Команда: {project.currentTeam}/{project.teamSize}
+          </div>
+        )}
       </div>
     </Link>
   );

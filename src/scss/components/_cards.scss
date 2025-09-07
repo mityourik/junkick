@@ -9,7 +9,6 @@
 
   background-color: color(background);
   border-color: color(border);
-  max-width: 50%;
   padding: 6px;
   border-radius: 0.1rem;
 
@@ -18,6 +17,13 @@
     margin-bottom: space(xs);
     display: flex;
     justify-content: space-between;
+  }
+
+  .card__header-wanted-roles {
+    display: flex;
+    gap: space(xs);
+    flex-wrap: wrap;
+    max-width: 67%;
   }
 
   &__status {
@@ -109,6 +115,67 @@
 
   &--rounded {
     border-radius: radius(xl);
+  }
+
+  // Унифицированный вид карточек проектов (используется на главной и странице проектов)
+  &--project {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    height: 160px; // фиксированная высота — карточки не скачут
+    overflow: hidden;
+    font-size: 0.5rem; // шрифт в 2 раза меньше
+
+    .card__header {
+      align-items: flex-start;
+      font-size: 0.5rem;
+      gap: space(xs);
+      flex-wrap: wrap;
+    }
+
+    .card__status {
+      font-size: 0.5rem;
+      margin-bottom: 0;
+    }
+
+    .card__status-looking-for {
+      font-size: 0.5rem;
+      max-width: 100%;
+      white-space: normal; // не обрезаем
+      overflow: visible;
+      flex: 1 1 100%; // отдельной строкой на всю ширину
+    }
+
+    .card__title {
+      // Примерно в 2 раза меньше, с обрезкой на 2 строки
+      font-size: 0.5625rem; // половина от 1.125rem (lg)
+      line-height: 1.2;
+      @include text-truncate-lines(2);
+      margin-bottom: 0;
+      word-break: break-word;
+    }
+
+    .card__body {
+      overflow: hidden;
+      flex: 1 1 auto;
+
+      > div {
+        @include text-truncate; // строки в одну строку с троеточием
+        color: color(text-muted);
+      }
+
+      .card__meta + .card__meta {
+        margin-top: space(xs);
+      }
+    }
+  }
+
+  // Модификатор без рамки — для страницы проекта
+  &--no-border {
+    border: none;
+    box-shadow: none;
+    padding: 0 20px;
   }
 }
 
