@@ -11,7 +11,6 @@
     text-align: center;
   }
 
-  // Шапка карточки
   .card__header {
     &-top {
       display: flex;
@@ -25,7 +24,7 @@
       border-radius: radius(sm);
       background-color: #e3f2fd;
       color: #1565c0;
-      font-size: font-size(sm); // ~0.875rem
+      font-size: font-size(sm);
       display: inline-flex;
       align-items: center;
     }
@@ -48,7 +47,6 @@
     }
   }
 
-  // Тело
   &__title {
     margin-bottom: space(md);
   }
@@ -64,7 +62,6 @@
     gap: space(2xl);
   }
 
-  // Технологии
   &__tech-list {
     display: flex;
     flex-wrap: wrap;
@@ -80,7 +77,6 @@
     border: 1px solid #e0e0e0;
   }
 
-  // Списки
   &__list {
     margin-top: 0.5rem;
     padding-left: 1.5rem;
@@ -90,7 +86,6 @@
     }
   }
 
-  // Владелец
   &__owner {
     display: flex;
     align-items: center;
@@ -101,11 +96,18 @@
     border-radius: radius(md);
   }
 
-  &__owner-name { font-weight: 600; }
-  &__owner-meta { font-size: font-size(sm); color: color(text-muted); }
-  &__owner-bio { font-size: font-size(sm); margin-top: space(xs); }
+  &__owner-name {
+    font-weight: 600;
+  }
+  &__owner-meta {
+    font-size: font-size(sm);
+    color: color(text-muted);
+  }
+  &__owner-bio {
+    font-size: font-size(sm);
+    margin-top: space(xs);
+  }
 
-  // Команда
   &__team {
     margin-top: 0.5rem;
     display: flex;
@@ -122,16 +124,53 @@
     border-radius: radius(md);
   }
 
-  &__team-name { font-weight: 500; }
-  &__team-meta { font-size: font-size(sm); color: color(text-muted); }
+  &__team-name {
+    font-weight: 500;
+  }
+  &__team-meta {
+    font-size: font-size(sm);
+    color: color(text-muted);
+  }
 
-  // Футер
   &__footer {
     margin-top: space(2xl);
     padding-top: space(md);
     border-top: 1px solid color(border);
 
-    // Отступ между ссылками
-    a + a { margin-left: space(md); }
+    a + a {
+      margin-left: space(md);
+    }
+  }
+
+  .apply-form {
+    margin-top: space(2xl);
+    display: flex;
+    flex-direction: column;
+    gap: space(md);
+
+    &__row {
+      display: grid;
+      gap: space(md);
+      grid-template-columns: 1fr;
+      @include desktop-up {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    &__group {
+      display: flex;
+      flex-direction: column;
+      gap: space(xs);
+    }
+    &__actions {
+      display: flex;
+      gap: space(sm);
+    }
+    &__success {
+      color: #2e7d32;
+    }
+  }
+  .input {
+    @include input-base;
   }
 }

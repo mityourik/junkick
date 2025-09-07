@@ -34,7 +34,7 @@ export interface User {
 }
 
 export interface Project {
-  id: number;
+  id: number | string;
   name: string;
   description: string;
   status: string;
@@ -54,6 +54,15 @@ export interface Project {
   teamMembers: number[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface Application {
+  id: number;
+  projectId: number | string;
+  name: string;
+  role: string;
+  message: string;
+  createdAt: string;
 }
 
 export interface Role {
@@ -106,8 +115,8 @@ export const usersApi = {
 
 export const projectsApi = {
   getAll: () => apiRequest<Project[]>('/projects'),
-  getById: async (id: number) => {
-    const list = await apiRequest<Project[]>(`/projects?id=${id}`);
+  getById: async (id: number | string) => {
+    const list = await apiRequest<Project[]>(`/projects?id=${encodeURIComponent(String(id))}`);
     if (!Array.isArray(list) || list.length === 0) {
       throw new Error('Project not found');
     }
@@ -148,12 +157,23 @@ export const categoriesApi = {
   getById: (id: string) => apiRequest<Category>(`/categories/${id}`),
 };
 
+export const applicationsApi = {
+  create: (app: Omit<Application, 'id'>) =>
+    apiRequest<Application>('/applications', {
+      method: 'POST',
+      body: JSON.stringify(app),
+    }),
+  getByProject: (projectId: number) =>
+    apiRequest<Application[]>(`/applications?projectId=${projectId}`),
+};
+
 export const api = {
   users: usersApi,
   projects: projectsApi,
   roles: rolesApi,
   technologies: technologiesApi,
   categories: categoriesApi,
+  applications: applicationsApi,
 };
 
 export default api;

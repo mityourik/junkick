@@ -9,10 +9,14 @@ export default function ProjectDetailPage() {
   const [teamMembers, setTeamMembers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [applyName, setApplyName] = useState('');
+  const [applyRole, setApplyRole] = useState('джун');
+  const [applyMessage, setApplyMessage] = useState('');
+  const [applySuccess, setApplySuccess] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProjectData = async () => {
-      if (!id || isNaN(Number(id))) {
+      if (!id) {
         setError('Invalid project ID');
         setLoading(false);
         return;
@@ -21,7 +25,7 @@ export default function ProjectDetailPage() {
       try {
         setLoading(true);
 
-        const projectData = await api.projects.getById(Number(id));
+        const projectData = await api.projects.getById(id);
         setProject(projectData);
 
         const ownerData = await api.users.getById(projectData.ownerId);
@@ -148,6 +152,74 @@ export default function ProjectDetailPage() {
                 </div>
               </div>
             )}
+
+            <div>
+              <h3>Оставить заявку на участие</h3>
+              {applySuccess && <div className="apply-form__success">{applySuccess}</div>}
+              <form
+                className="apply-form"
+                onSubmit={async e => {
+                  e.preventDefault();
+                  try {
+                    setApplySuccess(null);
+                    await api.applications.create({
+                      projectId: project?.id ?? id,
+                      name: applyName.trim(),
+                      role: applyRole,
+                      message: applyMessage.trim(),
+                      createdAt: new Date().toISOString(),
+                    });
+                    setApplySuccess('Заявка отправлена');
+                    setApplyName('');
+                    setApplyMessage('');
+                  } catch (err) {
+                    setApplySuccess('Не удалось отправить заявку: ' + (err as Error).message);
+                  }
+                }}
+              >
+                <div className="apply-form__row">
+                  <div className="apply-form__group">
+                    <label htmlFor="apply-name">Ваше имя</label>
+                    <input
+                      id="apply-name"
+                      className="input"
+                      value={applyName}
+                      onChange={e => setApplyName(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="apply-form__group">
+                    <label htmlFor="apply-role">Роль</label>
+                    <select
+                      id="apply-role"
+                      className="input"
+                      value={applyRole}
+                      onChange={e => setApplyRole(e.target.value)}
+                    >
+                      <option value="джун">джун</option>
+                      <option value="тимлид">тимлид</option>
+                      <option value="заказчик">заказчик</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="apply-form__group">
+                  <label htmlFor="apply-message">Сообщение</label>
+                  <textarea
+                    id="apply-message"
+                    className="input"
+                    rows={3}
+                    value={applyMessage}
+                    onChange={e => setApplyMessage(e.target.value)}
+                  />
+                </div>
+                <div className="apply-form__actions">
+                  <button className="btn btn--primary">Отправить заявку</button>
+                  <Link to="/projects" className="btn btn--ghost">
+                    К списку проектов
+                  </Link>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
 

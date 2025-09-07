@@ -56,6 +56,11 @@ export default function ProjectsPage() {
   return (
     <div className="container projects-page">
       <h1>Проекты</h1>
+      <div className="projects-page__actions">
+        <Link to="/projects/new" className="btn btn--primary">
+          Создать проект
+        </Link>
+      </div>
       {params.get('role') && (
         <div className="projects-page__filter">
           Фильтр по роли: <strong>{params.get('role')}</strong>{' '}
