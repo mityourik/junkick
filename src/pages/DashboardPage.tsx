@@ -221,7 +221,28 @@ export default function DashboardPage() {
           ) : (
             <div className="projects-page__grid">
               {myProjects.map(p => (
-                <ProjectCard key={p.id} project={p} />
+                <div key={p.id}>
+                  <ProjectCard project={p} />
+                  <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                    <Link to={`/projects/${p.id}/edit`} className="btn btn--sm">
+                      Редактировать
+                    </Link>
+                    <button
+                      className="btn btn--danger btn--sm"
+                      onClick={async () => {
+                        if (!window.confirm('Удалить проект?')) return;
+                        try {
+                          await api.projects.delete(p.id);
+                          setMyProjects(prev => prev.filter(x => String(x.id) !== String(p.id)));
+                        } catch (err) {
+                          alert('Не удалось удалить: ' + (err as Error).message);
+                        }
+                      }}
+                    >
+                      Удалить
+                    </button>
+                  </div>
+                </div>
               ))}
             </div>
           )}

@@ -108,7 +108,7 @@ export default function EditProjectPage() {
         status: form.status,
         updatedAt: new Date().toISOString(),
       };
-      const updated = await api.projects.update(Number(project.id), payload);
+      const updated = await api.projects.update(project.id, payload);
       navigate(`/projects/${updated.id}`);
     } catch (e) {
       setError((e as Error).message || 'Не удалось сохранить изменения');

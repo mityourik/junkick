@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { api, type Project, type User } from '../api';
 import { useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import { selectCurrentUser } from '../store/usersSlice';
 
 export default function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [project, setProject] = useState<Project | null>(null);
   const [owner, setOwner] = useState<User | null>(null);
   const [teamMembers, setTeamMembers] = useState<User[]>([]);
@@ -16,6 +17,7 @@ export default function ProjectDetailPage() {
   const [applyMessage, setApplyMessage] = useState('');
   const [applySuccess, setApplySuccess] = useState<string | null>(null);
   const currentUser = useSelector(selectCurrentUser);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const fetchProjectData = async () => {
@@ -229,7 +231,27 @@ export default function ProjectDetailPage() {
         <div className="card__footer project-detail__footer">
           <Link to="/projects">← Back to Projects</Link>
           {currentUser && String(currentUser.id) === String(project.ownerId) && (
-            <Link to={`/projects/${project.id}/edit`}>Редактировать</Link>
+            <>
+              <Link to={`/projects/${project.id}/edit`}>Редактировать</Link>
+              <button
+                className={`btn btn--danger btn--sm ${deleting ? 'btn--loading' : ''}`}
+                disabled={deleting}
+                onClick={async () => {
+                  if (!window.confirm('Удалить проект? Действие необратимо.')) return;
+                  try {
+                    setDeleting(true);
+                    await api.projects.delete(project.id);
+                    navigate('/projects');
+                  } catch (err) {
+                    alert('Не удалось удалить проект: ' + (err as Error).message);
+                  } finally {
+                    setDeleting(false);
+                  }
+                }}
+              >
+                Удалить
+              </button>
+            </>
           )}
           <Link to="/">На главную</Link>
         </div>

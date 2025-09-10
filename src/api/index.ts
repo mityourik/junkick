@@ -141,13 +141,13 @@ export const projectsApi = {
       method: 'POST',
       body: JSON.stringify(project),
     }),
-  update: (id: number, project: Partial<Project>) =>
-    apiRequest<Project>(`/projects/${id}`, {
+  update: (id: number | string, project: Partial<Project>) =>
+    apiRequest<Project>(`/projects/${encodeURIComponent(String(id))}`, {
       method: 'PATCH',
       body: JSON.stringify(project),
     }),
-  delete: (id: number) =>
-    apiRequest<void>(`/projects/${id}`, {
+  delete: (id: number | string) =>
+    apiRequest<void>(`/projects/${encodeURIComponent(String(id))}`, {
       method: 'DELETE',
     }),
   search: (query: string) => apiRequest<Project[]>(`/projects?q=${encodeURIComponent(query)}`),
