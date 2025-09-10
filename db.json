@@ -408,6 +408,28 @@
       "teamMembers": [],
       "createdAt": "2025-09-07T19:12:48.020Z",
       "updatedAt": "2025-09-07T19:12:48.020Z"
+    },
+    {
+      "id": "0343",
+      "name": "ad",
+      "description": "asd",
+      "status": "Планирование",
+      "lookingFor": "asd",
+      "category": "Business",
+      "tech": ["asd"],
+      "neededRoles": ["заказчик"],
+      "teamSize": 3,
+      "currentTeam": 1,
+      "budget": "100",
+      "timeline": "1",
+      "complexity": "Средняя",
+      "image": "/projects/placeholder.jpg",
+      "features": [],
+      "requirements": [],
+      "ownerId": 1,
+      "teamMembers": [],
+      "createdAt": "2025-09-10T10:31:44.106Z",
+      "updatedAt": "2025-09-10T10:31:44.106Z"
     }
   ],
   "roles": [
@@ -531,6 +553,14 @@
       "role": "джун",
       "message": "ваываываваыа",
       "createdAt": "2025-09-07T18:58:41.846Z"
+    },
+    {
+      "id": "314c",
+      "projectId": "13",
+      "name": "asd",
+      "role": "джун",
+      "message": "asdasd",
+      "createdAt": "2025-09-10T10:36:47.967Z"
     }
   ],
   "sessions": [

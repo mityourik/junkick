@@ -3,11 +3,10 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { App } from './App.tsx';
 import './scss/main.scss';
-import { initTimeTheme } from './theme';
 import { store } from './store';
 import { setCurrentUser } from './store/usersSlice';
 
-initTimeTheme();
+// Theme follows system via CSS `prefers-color-scheme`; no JS needed.
 
 try {
   const raw = localStorage.getItem('currentUser');
