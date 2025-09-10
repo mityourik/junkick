@@ -4,10 +4,12 @@ import { HomePage } from './pages/HomePage';
 import ProjectsPage from './pages/ProjectsPage';
 import NewProjectPage from './pages/NewProjectPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
+import EditProjectPage from './pages/EditProjectPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import RequireAuth from './components/RequireAuth';
 import NotFoundPage from './pages/NotFoundPage';
+import DashboardPage from './pages/DashboardPage';
 
 export const App = () => {
   return (
@@ -32,8 +34,24 @@ export const App = () => {
               </RequireAuth>
             }
           />
+          <Route
+            path="/projects/:id/edit"
+            element={
+              <RequireAuth>
+                <EditProjectPage />
+              </RequireAuth>
+            }
+          />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route
+            path="/me"
+            element={
+              <RequireAuth>
+                <DashboardPage />
+              </RequireAuth>
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

@@ -231,7 +231,7 @@
       "ownerId": 1,
       "teamMembers": [],
       "createdAt": "2024-08-13T09:30:00Z",
-      "updatedAt": "2024-08-13T09:30:00Z"
+      "updatedAt": "2025-09-10T20:22:36.456Z"
     },
     {
       "id": "7",
@@ -430,6 +430,28 @@
       "teamMembers": [],
       "createdAt": "2025-09-10T10:31:44.106Z",
       "updatedAt": "2025-09-10T10:31:44.106Z"
+    },
+    {
+      "id": "3b72",
+      "name": "Мой проект",
+      "description": "Описание",
+      "status": "Планирование",
+      "lookingFor": "Дата сайнтиста",
+      "category": "Mobile",
+      "tech": ["Технология", "еще", "и еще"],
+      "neededRoles": ["заказчик", "тимлид"],
+      "teamSize": 10,
+      "currentTeam": 1,
+      "budget": "10000000",
+      "timeline": "24",
+      "complexity": "Средняя",
+      "image": "/projects/placeholder.jpg",
+      "features": [],
+      "requirements": [],
+      "ownerId": 2,
+      "teamMembers": [],
+      "createdAt": "2025-09-10T20:17:12.545Z",
+      "updatedAt": "2025-09-10T20:17:12.545Z"
     }
   ],
   "roles": [
@@ -561,6 +583,14 @@
       "role": "джун",
       "message": "asdasd",
       "createdAt": "2025-09-10T10:36:47.967Z"
+    },
+    {
+      "id": "0b00",
+      "projectId": "4",
+      "name": "Заказчик",
+      "role": "заказчик",
+      "message": "Сообщение какое-то",
+      "createdAt": "2025-09-10T20:23:34.226Z"
     }
   ],
   "sessions": [

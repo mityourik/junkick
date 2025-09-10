@@ -1,6 +1,8 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { api, type Project, type User } from '../api';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../store/usersSlice';
 
 export default function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -13,6 +15,7 @@ export default function ProjectDetailPage() {
   const [applyRole, setApplyRole] = useState('джун');
   const [applyMessage, setApplyMessage] = useState('');
   const [applySuccess, setApplySuccess] = useState<string | null>(null);
+  const currentUser = useSelector(selectCurrentUser);
 
   useEffect(() => {
     const fetchProjectData = async () => {
@@ -225,6 +228,9 @@ export default function ProjectDetailPage() {
 
         <div className="card__footer project-detail__footer">
           <Link to="/projects">← Back to Projects</Link>
+          {currentUser && String(currentUser.id) === String(project.ownerId) && (
+            <Link to={`/projects/${project.id}/edit`}>Редактировать</Link>
+          )}
           <Link to="/">На главную</Link>
         </div>
       </div>

@@ -125,6 +125,8 @@ export const usersApi = {
 
 export const projectsApi = {
   getAll: () => apiRequest<Project[]>('/projects'),
+  getByOwner: (ownerId: number | string) =>
+    apiRequest<Project[]>(`/projects?ownerId=${encodeURIComponent(String(ownerId))}`),
   getById: async (id: number | string) => {
     const list = await apiRequest<Project[]>(`/projects?id=${encodeURIComponent(String(id))}`);
     if (!Array.isArray(list) || list.length === 0) {

@@ -34,6 +34,16 @@ export const Navigation = () => {
               Проекты
             </Link>
           </li>
+          {user && (
+            <li>
+              <Link
+                to="/me"
+                className={`navbar__link ${isActive('/me') ? 'navbar__link--active' : ''}`}
+              >
+                Кабинет
+              </Link>
+            </li>
+          )}
           {!user ? (
             <li>
               <Link
