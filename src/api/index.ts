@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
@@ -20,7 +20,8 @@ async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promi
 }
 
 export interface User {
-  id: number | string;
+  id?: number | string;
+  customId?: number | string;
   name: string;
   email: string;
   password?: string;
@@ -35,7 +36,8 @@ export interface User {
 }
 
 export interface Project {
-  id: number | string;
+  id?: number | string;
+  customId?: number | string;
   name: string;
   description: string;
   status: string;
@@ -90,22 +92,26 @@ export interface Category {
 }
 
 export const usersApi = {
-  getAll: () => apiRequest<User[]>('/users'),
+  getAll: async () => {
+    const response = await apiRequest<User[] | { users: User[] }>('/users');
+    return Array.isArray(response) ? response : response.users || [];
+  },
   getById: async (id: number | string) => {
-    const list = await apiRequest<User[]>(`/users?id=${encodeURIComponent(String(id))}`);
+    const response = await apiRequest<User[] | { users: User[] }>(
+      `/users?customId=${encodeURIComponent(String(id))}`,
+    );
+    const list = Array.isArray(response) ? response : response.users || response;
     if (!Array.isArray(list) || list.length === 0) {
       throw new Error('User not found');
     }
     return list[0];
   },
   findByEmailPassword: async (email: string, password: string) => {
-    const list = await apiRequest<User[]>(
-      `/users?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`,
-    );
-    if (!Array.isArray(list) || list.length === 0) {
-      throw new Error('Invalid credentials');
-    }
-    return list[0];
+    const response = await apiRequest<User>('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    });
+    return response;
   },
   create: (user: Omit<User, 'id'>) =>
     apiRequest<User>('/users', {
@@ -124,11 +130,21 @@ export const usersApi = {
 };
 
 export const projectsApi = {
-  getAll: () => apiRequest<Project[]>('/projects'),
-  getByOwner: (ownerId: number | string) =>
-    apiRequest<Project[]>(`/projects?ownerId=${encodeURIComponent(String(ownerId))}`),
+  getAll: async () => {
+    const response = await apiRequest<Project[] | { projects: Project[] }>('/projects');
+    return Array.isArray(response) ? response : response.projects || [];
+  },
+  getByOwner: async (ownerId: number | string) => {
+    const response = await apiRequest<Project[] | { projects: Project[] }>(
+      `/projects?ownerCustomId=${encodeURIComponent(String(ownerId))}`,
+    );
+    return Array.isArray(response) ? response : response.projects || [];
+  },
   getById: async (id: number | string) => {
-    const list = await apiRequest<Project[]>(`/projects?id=${encodeURIComponent(String(id))}`);
+    const response = await apiRequest<Project[] | { projects: Project[] }>(
+      `/projects?customId=${encodeURIComponent(String(id))}`,
+    );
+    const list = Array.isArray(response) ? response : response.projects || response;
     if (!Array.isArray(list) || list.length === 0) {
       throw new Error('Project not found');
     }

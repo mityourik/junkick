@@ -15,10 +15,14 @@ export const HomePage = () => {
     (async () => {
       try {
         setLoading(true);
-        const data = await api.projects.getAll();
+        const response = await api.projects.getAll();
+        const data = Array.isArray(response) ? response : response.projects || [];
         if (!cancelled) setProjects(data);
       } catch (e) {
-        if (!cancelled) setError('Не удалось загрузить проекты: ' + (e as Error).message);
+        if (!cancelled) {
+          setError('Не удалось загрузить проекты: ' + (e as Error).message);
+          setProjects([]); // Убеждаемся, что projects остается массивом
+        }
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -30,6 +34,7 @@ export const HomePage = () => {
 
   const role = params.get('role');
   const visible = useMemo(() => {
+    if (!Array.isArray(projects)) return [];
     if (!role) return projects.slice(0, 6);
     return projects.filter(p => p.neededRoles?.some(r => r.toLowerCase() === role.toLowerCase()));
   }, [projects, role]);
@@ -47,7 +52,11 @@ export const HomePage = () => {
             {!loading &&
               !error &&
               visible.map(project => (
-                <ProjectCard key={project.id} project={project} showTeam={false} />
+                <ProjectCard
+                  key={project.customId || project.id}
+                  project={project}
+                  showTeam={false}
+                />
               ))}
           </div>
         </div>

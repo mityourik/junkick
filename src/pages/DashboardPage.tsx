@@ -24,18 +24,44 @@ export default function DashboardPage() {
   });
 
   useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const r = await api.roles.getAll();
-        if (!cancelled) setRoles(r);
-      } catch {
-        if (!cancelled) setRoles([]);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
+    // Временно используем статический список ролей
+    setRoles([
+      {
+        id: 'junior',
+        name: 'Джун',
+        description: 'Начинающий разработчик',
+        variant: 'outline',
+        color: '#2c91dc',
+      },
+      {
+        id: 'middle',
+        name: 'Мидл',
+        description: 'Разработчик среднего уровня',
+        variant: 'primary',
+        color: '#27ae60',
+      },
+      {
+        id: 'senior',
+        name: 'Синьор',
+        description: 'Опытный разработчик',
+        variant: 'secondary',
+        color: '#f39c12',
+      },
+      {
+        id: 'teamlead',
+        name: 'Тимлид',
+        description: 'Руководитель команды',
+        variant: 'ghost',
+        color: '#e74c3c',
+      },
+      {
+        id: 'client',
+        name: 'Заказчик',
+        description: 'Заказчик проекта',
+        variant: 'success',
+        color: '#9b59b6',
+      },
+    ]);
   }, []);
 
   useEffect(() => {
@@ -54,16 +80,21 @@ export default function DashboardPage() {
     let cancelled = false;
     (async () => {
       if (!user) return;
+
+      const userId = user.customId || user.id;
+      if (!userId) return;
+
       try {
-        const owned = await api.projects.getByOwner(user.id);
+        const owned = await api.projects.getByOwner(userId);
         if (!cancelled) setMyProjects(owned);
       } catch {
         if (!cancelled) setMyProjects([]);
       }
 
       try {
-        const all = await api.projects.getAll();
-        const asMember = all.filter(p => p.teamMembers?.some(id => String(id) === String(user.id)));
+        const response = await api.projects.getAll();
+        const all = Array.isArray(response) ? response : response.projects || [];
+        const asMember = all.filter(p => p.teamMembers?.some(id => String(id) === String(userId)));
         if (!cancelled) setMemberProjects(asMember);
       } catch {
         if (!cancelled) setMemberProjects([]);

@@ -8,8 +8,9 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({ project, showTech = true, showTeam = true }: ProjectCardProps) => {
+  const projectId = project.customId || project.id;
   return (
-    <Link to={`/projects/${project.id}`} className="card card--link card--project">
+    <Link to={`/projects/${projectId}`} className="card card--link card--project">
       <div className="card__header">
         <span className="card__status">{project.status}</span>
         <span className="card__status-looking-for">{project.lookingFor}</span>

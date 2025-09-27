@@ -14,7 +14,10 @@ export default function ProjectsPage() {
     const load = async () => {
       try {
         setLoading(true);
-        const projectsData = await api.projects.getAll();
+        const response = await api.projects.getAll();
+        const projectsData = Array.isArray(response)
+          ? response
+          : (response as { projects?: Project[] }).projects || [];
         if (!cancelled) setProjects(projectsData);
       } catch (e) {
         console.error(e);
@@ -71,7 +74,7 @@ export default function ProjectsPage() {
       )}
       <div className="projects-page__grid">
         {filtered.map(project => (
-          <ProjectCard key={project.id} project={project} />
+          <ProjectCard key={project.customId || project.id} project={project} />
         ))}
       </div>
       <Link to="/" className="projects-page__back">
