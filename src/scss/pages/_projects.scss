@@ -1,0 +1,106 @@
+// =============================================
+// СТРАНИЦА ПРОЕКТОВ
+// =============================================
+
+@use '../abstracts' as *;
+
+.projects-page {
+  padding: 20px 10px 0 10px;
+
+  &--centered {
+    text-align: center;
+  }
+
+  &__filter {
+    margin-top: space(sm);
+    color: color(text-muted);
+    font-size: 0.9rem;
+  }
+
+  &__reset {
+    margin-left: space(sm);
+  }
+
+  &__back {
+    margin: 20px 0 15px 0;
+    display: inline-block;
+  }
+
+  &__grid {
+    gap: space(md);
+    margin-top: space(xl);
+    @include grid-responsive(2, 3, 3);
+  }
+}
+
+.new-project {
+  padding: 20px 15px 15px 15px;
+
+  &__error {
+    color: #d32f2f;
+    margin-bottom: space(md);
+  }
+}
+
+.projects-page__actions {
+  margin: 10px 0 10px 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: space(md);
+}
+
+.form__row {
+  display: grid;
+  gap: space(md);
+  grid-template-columns: 1fr;
+  @include desktop-up {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+  gap: space(xs);
+}
+
+.form__actions {
+  display: flex;
+  gap: space(sm);
+}
+
+.form__chips {
+  display: flex;
+  gap: space(sm);
+  flex-wrap: wrap;
+}
+
+.input {
+  @include input-base;
+}
+
+.chip {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid color(border);
+  border-radius: radius(sm);
+  background-color: color(surface);
+  cursor: pointer;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  input {
+    display: none;
+  }
+
+  &--active {
+    border-color: color(primary);
+    color: color(primary);
+  }
+}

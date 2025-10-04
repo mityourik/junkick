@@ -1,0 +1,74 @@
+// =============================================
+// ГЛАВНАЯ СТРАНИЦА
+// =============================================
+
+@use '../abstracts' as *;
+
+.homepage {
+  // Make homepage occupy available height and stick content to bottom
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  &__hero {
+    text-align: center;
+    padding: space(xl) 0;
+
+    @include desktop-up {
+      padding: space(xl) 0;
+    }
+  }
+
+  &__title {
+    @include heading(3xl, bold);
+    margin-bottom: space(md);
+
+    @include desktop-up {
+      font-size: font-size(3xl);
+    }
+  }
+
+  // &__subtitle {
+  //   @include text(lg, normal, text-muted);
+  //   margin-bottom: space(xl);
+  //   max-width: 600px;
+  //   margin-left: auto;
+  //   margin-right: auto;
+
+  //   @include desktop-up {
+  //     font-size: font-size(xl);
+  //   }
+  // }
+
+  // &__cta {
+  //   @include flex-center;
+  //   gap: space(md);
+  //   flex-wrap: wrap;
+  // }
+
+  &__features {
+    // Keep some breathing room while anchored to bottom
+    // padding: space(3xl) 0;
+
+    &-container {
+      // Declarations first to avoid Sass mixed-decls warning
+      display: flex;
+      flex-direction: column-reverse;
+      @include container;
+    }
+
+    @include desktop-up {
+      padding: space(xl) 0;
+    }
+  }
+
+  &__features-grid {
+    // Две колонки на мобильных, три на шире — как на /projects
+    @include grid-responsive(2, 3, 3);
+
+    & {
+      margin-top: space(xl);
+    }
+  }
+}

@@ -1,0 +1,128 @@
+// =============================================
+// RESET И БАЗОВЫЕ СТИЛИ (Mobile-First)
+// =============================================
+
+@use '../abstracts' as *;
+
+// CSS Reset
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// HTML & Body
+html {
+  font-family: $font-family-base;
+  font-size: font-size(base);
+  line-height: line-height(normal);
+  color: color(text);
+  background-color: color(background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+}
+
+// App root as flex column layout to keep nav at bottom
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  // Prevent content from being hidden under fixed navbar
+  padding-bottom: var(--navbar-height);
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-weight: font-weight(semibold);
+  line-height: line-height(tight);
+  margin-bottom: space(md);
+  
+  // Mobile typography
+  &.h1, h1 { 
+    @include heading(3xl);
+    
+    @include desktop-up {
+      font-size: font-size(4xl);
+    }
+  }
+  
+  &.h2, h2 { 
+    @include heading(2xl);
+    
+    @include desktop-up {
+      font-size: font-size(3xl);
+    }
+  }
+  
+  &.h3, h3 { @include heading(xl); }
+  &.h4, h4 { @include heading(lg); }
+  &.h5, h5 { @include heading(base); }
+  &.h6, h6 { @include heading(sm); }
+}
+
+p {
+  margin-bottom: space(md);
+  line-height: line-height(relaxed);
+}
+
+// Links
+a {
+  color: color(primary);
+  text-decoration: none;
+  transition: transition(normal);
+  
+  &:hover {
+    color: color(primary-hover);
+  }
+}
+
+// Lists
+ul, ol {
+  padding-left: space(lg);
+  margin-bottom: space(md);
+}
+
+li {
+  margin-bottom: space(xs);
+}
+
+// Images
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// Form elements
+input, textarea, select, button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+// Focus styles
+:focus-visible {
+  outline: 2px solid color(primary);
+  outline-offset: 2px;
+}
+
+// Dark mode
+@media (prefers-color-scheme: dark) {
+  html {
+    color: color(dark-text);
+    background-color: color(dark-background);
+  }
+}

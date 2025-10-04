@@ -1,0 +1,13 @@
+// =============================================
+// СПИСОК КНОПОК РОЛЕЙ
+// =============================================
+
+@use '../abstracts' as *;
+
+.roles-buttons-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}

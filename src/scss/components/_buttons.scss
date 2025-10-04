@@ -1,0 +1,97 @@
+// =============================================
+// КНОПКИ (Mobile-First)
+// =============================================
+
+@use '../abstracts' as *;
+
+.btn {
+  @include button-base;
+  @include button-disabled;
+
+  // Варианты кнопок
+  &--primary {
+    @include button-variant(primary, white, primary-hover);
+  }
+
+  &--secondary {
+    @include button-variant(secondary);
+  }
+
+  &--success {
+    @include button-variant(success);
+  }
+
+  &--danger {
+    @include button-variant(danger);
+  }
+
+  &--outline {
+    background-color: transparent;
+    color: color(primary);
+    border: 1px solid color(primary);
+
+    &:hover:not(:disabled) {
+      background-color: color(primary);
+      color: white;
+    }
+  }
+
+  &--ghost {
+    background-color: transparent;
+    color: color(text);
+
+    &:hover:not(:disabled) {
+      background-color: color(surface);
+    }
+  }
+
+  &--full-row {
+    width: 100%;
+    background-color: transparent;
+    color: color(text);
+    width: 30%;
+    border: 0.7px solid color(text);
+    border-radius: 0.125rem;
+  }
+
+  // Размеры
+  &--sm {
+    padding: space(xs) space(sm);
+    font-size: font-size(sm);
+  }
+
+  &--lg {
+    padding: space(md) space(lg);
+    font-size: font-size(lg);
+  }
+
+  &--full {
+    width: 100%;
+  }
+
+  // Состояния
+  &--loading {
+    position: relative;
+    color: transparent;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top: 2px solid currentColor;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}

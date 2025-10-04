@@ -1,0 +1,64 @@
+// =============================================
+// ИКОНКИ
+// =============================================
+
+@use '../abstracts' as *;
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: currentColor;
+  transition: transition(fast);
+  
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    image-rendering: -webkit-optimize-contrast;
+  }
+  
+  // Размеры иконок
+  &--sm {
+    width: space(sm);
+    height: space(sm);
+  }
+  
+  &--md {
+    width: space(md);
+    height: space(md);
+  }
+  
+  &--lg {
+    width: space(lg);
+    height: space(lg);
+  }
+  
+  &--xl {
+    width: space(xl);
+    height: space(xl);
+  }
+}
+
+// Специальные стили для логотипа
+.icon--logo {
+  color: color(primary);
+  
+  &:hover {
+    color: color(primary-light);
+  }
+}
+
+// Вариант для растрового / горизонтального логотипа
+.icon--logo-wide {
+  width: 120px;
+  height: 50px;
+  .icon__img { width: 100%; height: auto; }
+}
