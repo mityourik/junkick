@@ -13,7 +13,7 @@ export default function ProjectDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [applyName, setApplyName] = useState('');
-  const [applyRole, setApplyRole] = useState('джун');
+  const [applyRole, setApplyRole] = useState('разработчик');
   const [applyMessage, setApplyMessage] = useState('');
   const [applySuccess, setApplySuccess] = useState<string | null>(null);
   const currentUser = useSelector(selectCurrentUser);
@@ -203,7 +203,7 @@ export default function ProjectDetailPage() {
                       value={applyRole}
                       onChange={e => setApplyRole(e.target.value)}
                     >
-                      <option value="джун">джун</option>
+                      <option value="разработчик">разработчик</option>
                       <option value="тимлид">тимлид</option>
                       <option value="заказчик">заказчик</option>
                     </select>

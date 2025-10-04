@@ -8,7 +8,7 @@ export default function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('джун');
+  const [role, setRole] = useState('разработчик');
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -89,7 +89,7 @@ export default function RegisterPage() {
               value={role}
               onChange={e => setRole(e.target.value)}
             >
-              <option value="джун">джун</option>
+              <option value="разработчик">разработчик</option>
               <option value="тимлид">тимлид</option>
               <option value="заказчик">заказчик</option>
             </select>

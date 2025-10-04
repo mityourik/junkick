@@ -81,7 +81,7 @@ export default function DashboardPage() {
   }, [user]);
 
   const roleOptions = useMemo(
-    () => (roles.length ? roles.map(r => r.name) : ['джун', 'тимлид', 'заказчик']),
+    () => (roles.length ? roles.map(r => r.name) : ['разработчик', 'тимлид', 'заказчик']),
     [roles],
   );
 

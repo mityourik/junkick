@@ -135,7 +135,7 @@ export default function NewProjectPage() {
         <div className="form__group">
           <label>Нужные роли</label>
           <div className="form__chips">
-            {['джун', 'тимлид', 'заказчик'].map(role => (
+            {['разработчик', 'тимлид', 'заказчик'].map(role => (
               <label
                 key={role}
                 className={`chip ${form.neededRoles.includes(role) ? 'chip--active' : ''}`}
