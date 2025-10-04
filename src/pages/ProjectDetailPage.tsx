@@ -33,7 +33,9 @@ export default function ProjectDetailPage() {
         const projectData = await api.projects.getById(id);
         setProject(projectData);
 
-        const ownerData = await api.users.getById(projectData.ownerId);
+        const ownerId =
+          typeof projectData.ownerId === 'object' ? projectData.ownerId._id : projectData.ownerId;
+        const ownerData = await api.users.getById(ownerId);
         setOwner(ownerData);
 
         if (projectData.teamMembers.length > 0) {
@@ -168,7 +170,7 @@ export default function ProjectDetailPage() {
                   try {
                     setApplySuccess(null);
                     await api.applications.create({
-                      projectId: project?.id ?? id,
+                      projectId: project?._id || project?.id || id!,
                       name: applyName.trim(),
                       role: applyRole,
                       message: applyMessage.trim(),
@@ -240,7 +242,7 @@ export default function ProjectDetailPage() {
                   if (!window.confirm('Удалить проект? Действие необратимо.')) return;
                   try {
                     setDeleting(true);
-                    await api.projects.delete(project.id);
+                    await api.projects.delete(project._id || project.id!);
                     navigate('/projects');
                   } catch (err) {
                     alert('Не удалось удалить проект: ' + (err as Error).message);

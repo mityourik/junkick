@@ -4,7 +4,7 @@ import { api, type Project } from '../api';
 export const fetchProjects = createAsyncThunk('projects/fetchAll', async () => {
   const response = await api.projects.getAll();
   // API возвращает объект с полем projects, извлекаем массив
-  return Array.isArray(response) ? response : response.projects || [];
+  return Array.isArray(response) ? response : (response as any).projects || [];
 });
 
 export const fetchProjectById = createAsyncThunk('projects/fetchById', async (id: number) => {
@@ -14,7 +14,7 @@ export const fetchProjectById = createAsyncThunk('projects/fetchById', async (id
 export const searchProjects = createAsyncThunk('projects/search', async (query: string) => {
   const response = await api.projects.search(query);
   // API возвращает объект с полем projects, извлекаем массив
-  return Array.isArray(response) ? response : response.projects || [];
+  return Array.isArray(response) ? response : (response as any).projects || [];
 });
 
 interface ProjectsState {

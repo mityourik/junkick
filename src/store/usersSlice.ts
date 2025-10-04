@@ -4,7 +4,7 @@ import { api, type User } from '../api';
 export const fetchUsers = createAsyncThunk('users/fetchAll', async () => {
   const response = await api.users.getAll();
   // API возвращает объект с полем users, извлекаем массив
-  return Array.isArray(response) ? response : response.users || [];
+  return Array.isArray(response) ? response : (response as any).users || [];
 });
 
 export const fetchUserById = createAsyncThunk('users/fetchById', async (id: number) => {
@@ -38,7 +38,7 @@ const usersSlice = createSlice({
       state.currentUser = null;
     },
     addTeamMember: (state, action: PayloadAction<User>) => {
-      state.teamMembers[action.payload.id] = action.payload;
+      state.teamMembers[action.payload.id as number] = action.payload;
     },
     clearError: state => {
       state.error = null;
@@ -65,7 +65,7 @@ const usersSlice = createSlice({
       })
       .addCase(fetchUserById.fulfilled, (state, action) => {
         state.loading = false;
-        state.teamMembers[action.payload.id] = action.payload;
+        state.teamMembers[action.payload.id as number] = action.payload;
       })
       .addCase(fetchUserById.rejected, (state, action) => {
         state.loading = false;

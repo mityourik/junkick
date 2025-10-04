@@ -16,7 +16,7 @@ export default function ProjectsPage() {
         setLoading(true);
         const response = await api.projects.getAll();
         // API возвращает объект с полем projects, извлекаем массив
-        const projectsData = Array.isArray(response) ? response : response.projects || [];
+        const projectsData = Array.isArray(response) ? response : (response as any).projects || [];
         if (!cancelled) setProjects(projectsData);
       } catch (e) {
         console.error(e);

@@ -17,7 +17,7 @@ export const HomePage = () => {
         setLoading(true);
         const response = await api.projects.getAll();
         // API возвращает объект с полем projects, извлекаем массив
-        const data = Array.isArray(response) ? response : response.projects || [];
+        const data = Array.isArray(response) ? response : (response as any).projects || [];
         if (!cancelled) setProjects(data);
       } catch (e) {
         if (!cancelled) setError('Не удалось загрузить проекты: ' + (e as Error).message);
