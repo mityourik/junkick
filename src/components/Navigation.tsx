@@ -63,7 +63,7 @@ export const Navigation = () => {
                   } catch (err) {
                     console.warn('Logout tracking failed', err);
                   }
-                  localStorage.removeItem('currentUser');
+                  localStorage.removeItem('accessToken');
                   dispatch(clearCurrentUser());
                   navigate('/login');
                 }}

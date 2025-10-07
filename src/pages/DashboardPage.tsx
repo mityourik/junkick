@@ -48,7 +48,7 @@ export default function DashboardPage() {
       role: user.role || '',
       location: user.location || '',
       bio: user.bio || '',
-      skills: (user.skills || []).join(', '),
+      skills: Array.isArray(user.skills) ? user.skills.join(', ') : user.skills || '',
       portfolio: user.portfolio || '',
     });
   }, [user]);
@@ -57,8 +57,17 @@ export default function DashboardPage() {
     let cancelled = false;
     (async () => {
       if (!user) return;
+      const userId = user._id || user.id;
+      if (!userId) {
+        console.warn('User ID is missing:', user);
+        return;
+      }
+
       try {
-        const owned = await api.projects.getByOwner(user.id);
+        const response = await api.projects.getByOwner(userId);
+        const owned = Array.isArray(response)
+          ? response
+          : (response as { projects?: Project[] }).projects || [];
         if (!cancelled) setMyProjects(owned);
       } catch {
         if (!cancelled) setMyProjects([]);

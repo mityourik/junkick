@@ -151,7 +151,7 @@ export default function ProjectDetailPage() {
                       <div>
                         <div className="project-detail__team-name">{member.name}</div>
                         <div className="project-detail__team-meta">
-                          {member.role} • {member.skills.slice(0, 3).join(', ')}
+                          {member.role} • {Array.isArray(member.skills) ? member.skills.slice(0, 3).join(', ') : member.skills}
                         </div>
                       </div>
                     </div>

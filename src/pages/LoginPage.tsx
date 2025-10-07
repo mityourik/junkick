@@ -20,9 +20,9 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       setError(null);
-      const user = await api.users.findByEmailPassword(email, password);
-      dispatch(setCurrentUser(user));
-      localStorage.setItem('currentUser', JSON.stringify(user));
+      const response = await api.auth.login(email, password);
+      dispatch(setCurrentUser(response.user));
+      localStorage.setItem('accessToken', response.accessToken);
       navigate(from, { replace: true });
     } catch (err: unknown) {
       if (err instanceof Error) {

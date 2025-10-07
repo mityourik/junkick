@@ -2,9 +2,14 @@ const API_BASE_URL = '/api';
 
 async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
+
+  // Получаем токен из localStorage
+  const token = localStorage.getItem('accessToken');
+
   const config: RequestInit = {
     headers: {
       'Content-Type': 'application/json',
+      ...(token && { Authorization: `Bearer ${token}` }),
       ...options.headers,
     },
     ...options,
@@ -20,13 +25,14 @@ async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promi
 }
 
 export interface User {
-  id: number | string;
+  id?: number | string;
+  _id?: string;
   name: string;
   email: string;
   password?: string;
   role: string;
   avatar: string;
-  skills: string[];
+  skills: string[] | string;
   bio: string;
   experience: number;
   location: string;
@@ -92,34 +98,19 @@ export interface Category {
 
 export const usersApi = {
   getAll: () => apiRequest<User[]>('/users'),
-  getById: async (id: number | string) => {
-    const list = await apiRequest<User[]>(`/users?id=${encodeURIComponent(String(id))}`);
-    if (!Array.isArray(list) || list.length === 0) {
-      throw new Error('User not found');
-    }
-    return list[0];
-  },
-  findByEmailPassword: async (email: string, password: string) => {
-    const list = await apiRequest<User[]>(
-      `/users?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`,
-    );
-    if (!Array.isArray(list) || list.length === 0) {
-      throw new Error('Invalid credentials');
-    }
-    return list[0];
-  },
+  getById: (id: number | string) => apiRequest<User>(`/users/${encodeURIComponent(String(id))}`),
   create: (user: Omit<User, 'id'>) =>
     apiRequest<User>('/users', {
       method: 'POST',
       body: JSON.stringify(user),
     }),
-  update: (id: number, user: Partial<User>) =>
-    apiRequest<User>(`/users/${id}`, {
+  update: (id: number | string, user: Partial<User>) =>
+    apiRequest<User>(`/users/${encodeURIComponent(String(id))}`, {
       method: 'PATCH',
       body: JSON.stringify(user),
     }),
-  delete: (id: number) =>
-    apiRequest<void>(`/users/${id}`, {
+  delete: (id: number | string) =>
+    apiRequest<void>(`/users/${encodeURIComponent(String(id))}`, {
       method: 'DELETE',
     }),
 };
@@ -127,16 +118,13 @@ export const usersApi = {
 export const projectsApi = {
   getAll: () => apiRequest<Project[]>('/projects'),
   getByOwner: (ownerId: number | string) =>
-    apiRequest<Project[]>(`/projects?ownerId=${encodeURIComponent(String(ownerId))}`),
-  getById: async (id: number | string) => {
-    const list = await apiRequest<Project[]>(`/projects?id=${encodeURIComponent(String(id))}`);
-    if (!Array.isArray(list) || list.length === 0) {
-      throw new Error('Project not found');
-    }
-    return list[0];
-  },
-  getByCategory: (category: string) => apiRequest<Project[]>(`/projects?category=${category}`),
-  getByStatus: (status: string) => apiRequest<Project[]>(`/projects?status=${status}`),
+    apiRequest<Project[]>(`/projects/owner/${encodeURIComponent(String(ownerId))}`),
+  getById: (id: number | string) =>
+    apiRequest<Project>(`/projects/${encodeURIComponent(String(id))}`),
+  getByCategory: (category: string) =>
+    apiRequest<Project[]>(`/projects/category/${encodeURIComponent(category)}`),
+  getByStatus: (status: string) =>
+    apiRequest<Project[]>(`/projects/status/${encodeURIComponent(status)}`),
   create: (project: Omit<Project, 'id'>) =>
     apiRequest<Project>('/projects', {
       method: 'POST',
@@ -151,7 +139,8 @@ export const projectsApi = {
     apiRequest<void>(`/projects/${encodeURIComponent(String(id))}`, {
       method: 'DELETE',
     }),
-  search: (query: string) => apiRequest<Project[]>(`/projects?q=${encodeURIComponent(query)}`),
+  search: (query: string) =>
+    apiRequest<Project[]>(`/projects/search?q=${encodeURIComponent(query)}`),
 };
 
 export const rolesApi = {
@@ -177,15 +166,44 @@ export const applicationsApi = {
       body: JSON.stringify(app),
     }),
   getByProject: (projectId: number | string) =>
-    apiRequest<Application[]>(`/applications?projectId=${encodeURIComponent(String(projectId))}`),
+    apiRequest<Application[]>(`/applications/project/${encodeURIComponent(String(projectId))}`),
 };
 
 export const authApi = {
+  login: (email: string, password: string) =>
+    apiRequest<{ user: User; accessToken: string }>('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    }),
+  register: (userData: {
+    name: string;
+    email: string;
+    password: string;
+    role?: string;
+    avatar?: string;
+    skills?: string[];
+    bio?: string;
+    experience?: number;
+    location?: string;
+    portfolio?: string;
+  }) =>
+    apiRequest<{ user: User; accessToken: string }>('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(userData),
+    }),
   logout: (userId: number | string) =>
-    apiRequest('/sessions', {
+    apiRequest('/auth/logout', {
       method: 'POST',
       body: JSON.stringify({ userId, type: 'logout', createdAt: new Date().toISOString() }),
     }),
+  validateUser: async (_userId: number | string) => {
+    try {
+      const user = await apiRequest<User>(`/auth/me`);
+      return user;
+    } catch {
+      return null;
+    }
+  },
 };
 
 export const api = {
