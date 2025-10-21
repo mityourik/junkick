@@ -31,13 +31,13 @@ export interface User {
   email: string;
   password?: string;
   role: string;
-  avatar: string;
-  skills: string[] | string;
+  avatar?: string;
+  skills: string;
   bio: string;
   experience: number;
   location: string;
-  portfolio: string;
-  createdAt: string;
+  github_link: string;
+  createdAt?: string;
 }
 
 export interface Project {

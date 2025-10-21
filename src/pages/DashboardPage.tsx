@@ -1,14 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { api, type Project, type Role as RoleDef, type User } from '../api';
+import { api, type Project, type User } from '../api';
 import { selectCurrentUser, setCurrentUser } from '../store/usersSlice';
 import { ProjectCard } from '../components/ProjectCard';
 
 export default function DashboardPage() {
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
-  const [roles, setRoles] = useState<RoleDef[]>([]);
   const [myProjects, setMyProjects] = useState<Project[]>([]);
   const [memberProjects, setMemberProjects] = useState<Project[]>([]);
   const [saving, setSaving] = useState(false);
@@ -16,40 +15,22 @@ export default function DashboardPage() {
 
   const [form, setForm] = useState({
     name: '',
-    role: '',
     location: '',
     bio: '',
     skills: '' as string,
-    portfolio: '',
+    experience: 0,
+    github_link: '',
   });
-
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const response = await api.roles.getAll();
-        const r = Array.isArray(response)
-          ? response
-          : (response as { roles?: RoleDef[] }).roles || [];
-        if (!cancelled) setRoles(r);
-      } catch {
-        if (!cancelled) setRoles([]);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   useEffect(() => {
     if (!user) return;
     setForm({
       name: user.name || '',
-      role: user.role || '',
       location: user.location || '',
       bio: user.bio || '',
-      skills: Array.isArray(user.skills) ? user.skills.join(', ') : user.skills || '',
-      portfolio: user.portfolio || '',
+      skills: user.skills || '',
+      experience: user.experience || 0,
+      github_link: user.github_link || '',
     });
   }, [user]);
 
@@ -89,11 +70,6 @@ export default function DashboardPage() {
     };
   }, [user]);
 
-  const roleOptions = useMemo(
-    () => (roles.length ? roles.map(r => r.name) : ['разработчик', 'тимлид', 'заказчик']),
-    [roles],
-  );
-
   if (!user) {
     return (
       <div className="container" style={{ padding: '2rem 0' }}>
@@ -112,16 +88,13 @@ export default function DashboardPage() {
       setError(null);
       const patch: Partial<User> = {
         name: form.name.trim(),
-        role: form.role,
         location: form.location.trim(),
         bio: form.bio.trim(),
-        skills: form.skills
-          .split(',')
-          .map(s => s.trim())
-          .filter(Boolean),
-        portfolio: form.portfolio.trim(),
+        skills: form.skills.trim(),
+        experience: form.experience,
+        github_link: form.github_link.trim(),
       };
-      const updated = await api.users.update(Number(user.id), patch);
+      const updated = await api.users.update(user._id || user.id!, patch);
       dispatch(setCurrentUser(updated));
       try {
         localStorage.setItem('currentUser', JSON.stringify(updated));
@@ -158,18 +131,13 @@ export default function DashboardPage() {
               </div>
               <div className="form__group">
                 <label htmlFor="role">Роль</label>
-                <select
+                <input
                   id="role"
                   className="input"
-                  value={form.role}
-                  onChange={e => setForm({ ...form, role: e.target.value })}
-                >
-                  {roleOptions.map(r => (
-                    <option key={r} value={r}>
-                      {r}
-                    </option>
-                  ))}
-                </select>
+                  value={user.role || ''}
+                  disabled
+                  style={{ backgroundColor: '#f5f5f5', color: '#666' }}
+                />
               </div>
             </div>
             <div className="form__row">
@@ -183,12 +151,25 @@ export default function DashboardPage() {
                 />
               </div>
               <div className="form__group">
-                <label htmlFor="portfolio">Портфолио</label>
+                <label htmlFor="github_link">GitHub</label>
                 <input
-                  id="portfolio"
+                  id="github_link"
                   className="input"
-                  value={form.portfolio}
-                  onChange={e => setForm({ ...form, portfolio: e.target.value })}
+                  value={form.github_link}
+                  onChange={e => setForm({ ...form, github_link: e.target.value })}
+                  placeholder="https://github.com/username"
+                />
+              </div>
+              <div className="form__group">
+                <label htmlFor="experience">Опыт (лет)</label>
+                <input
+                  id="experience"
+                  type="number"
+                  min="0"
+                  max="50"
+                  className="input"
+                  value={form.experience}
+                  onChange={e => setForm({ ...form, experience: parseInt(e.target.value) || 0 })}
                 />
               </div>
             </div>

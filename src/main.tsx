@@ -4,10 +4,10 @@ import { Provider } from 'react-redux';
 import { App } from './App.tsx';
 import './scss/main.scss';
 import { store } from './store';
-import { setCurrentUser } from './store/usersSlice';
+import { setCurrentUser, clearCurrentUser } from './store/usersSlice';
 import { api } from './api';
 
-const restoreAuth = async () => {
+const restoreAuth = () => {
   try {
     const raw = localStorage.getItem('currentUser');
     const token = localStorage.getItem('accessToken');
@@ -16,18 +16,26 @@ const restoreAuth = async () => {
       const user = JSON.parse(raw);
 
       if (user && (user.id || user._id) && user.email && user.name) {
-        try {
-          const validatedUser = await api.auth.validateUser(user._id || user.id);
+        store.dispatch(setCurrentUser(user));
 
-          if (validatedUser) {
-            store.dispatch(setCurrentUser(validatedUser));
-          } else {
-            localStorage.removeItem('currentUser');
-            localStorage.removeItem('accessToken');
-          }
-        } catch (error) {
-          store.dispatch(setCurrentUser(user));
-        }
+        api.auth
+          .validateUser(user._id || user.id)
+          .then(validatedUser => {
+            if (validatedUser) {
+              const mergedUser = {
+                ...user,
+                ...validatedUser,
+                github_link: validatedUser.github_link || user.github_link || '',
+                experience: validatedUser.experience || user.experience || 0,
+              };
+              store.dispatch(setCurrentUser(mergedUser));
+            } else {
+              localStorage.removeItem('currentUser');
+              localStorage.removeItem('accessToken');
+              store.dispatch(clearCurrentUser());
+            }
+          })
+          .catch(() => {});
       } else {
         localStorage.removeItem('currentUser');
         localStorage.removeItem('accessToken');
