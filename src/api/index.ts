@@ -104,11 +104,13 @@ export const usersApi = {
       method: 'POST',
       body: JSON.stringify(user),
     }),
-  update: (id: number | string, user: Partial<User>) =>
-    apiRequest<User>(`/users/${encodeURIComponent(String(id))}`, {
+  update: async (id: number | string, user: Partial<User>) => {
+    const response = await apiRequest<{ user: User }>(`/users/${encodeURIComponent(String(id))}`, {
       method: 'PATCH',
       body: JSON.stringify(user),
-    }),
+    });
+    return response.user;
+  },
   delete: (id: number | string) =>
     apiRequest<void>(`/users/${encodeURIComponent(String(id))}`, {
       method: 'DELETE',

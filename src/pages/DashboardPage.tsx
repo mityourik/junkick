@@ -109,7 +109,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="container" style={{ padding: '1.5rem 0' }}>
+    <div className="container">
       <h1>Личный кабинет</h1>
 
       <section className="card" style={{ marginBottom: '1.25rem' }}>
